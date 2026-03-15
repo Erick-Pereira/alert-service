@@ -1,0 +1,6 @@
+@Simcag.AlertService.Tests_HostAddress = http://localhost:5131
+
+GET {{Simcag.AlertService.Tests_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
