@@ -1,3 +1,7 @@
 <Solution>
-  <Project Path="alert-service/alert-service.csproj" />
+  <Project Path="F:/p/alert-service/alert-service/alert-service.csproj" />
+  <Project Path="F:/p/alert-service/Simcag.AlertService.Application/Simcag.AlertService.Application.csproj" Id="eb602921-ec4e-4142-8d6b-c53e697e66db" />
+  <Project Path="F:/p/alert-service/Simcag.AlertService.Domain/Simcag.AlertService.Domain.csproj" Id="a600e884-2f1d-48c0-896b-5c336b5d223d" />
+  <Project Path="F:/p/alert-service/Simcag.AlertService.Infrastructure/Simcag.AlertService.Infrastructure.csproj" Id="c7d26a36-eca6-4a02-a480-e83f8f20518a" />
+  <Project Path="F:/p/alert-service/Simcag.AlertService.Tests/Simcag.AlertService.Tests.csproj" Id="4983de87-0e23-4321-8648-458e4216e10c" />
 </Solution>
