@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿using Microsoft.AspNetCore.Mvc;
 using Simcag.AlertService.Application.UseCases.GetAlerts;
 using Simcag.AlertService.Application.UseCases.GetAlertById;
@@ -75,3 +76,11 @@ namespace alert_service.Controllers
         }
     }
 }
+=======
+﻿namespace alert_service.Controllers
+{
+    public class AlertsController
+    {
+    }
+}
+>>>>>>> 23a5c09dab3fb6f834f5f4642538e5640262907f

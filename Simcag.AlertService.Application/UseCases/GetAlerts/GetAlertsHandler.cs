@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿using Simcag.AlertService.Application.DTOs;
 using Simcag.AlertService.Application.Interfaces;
 using Simcag.AlertService.Domain.Entities;
@@ -40,3 +41,15 @@ public class GetAlertsHandler
         };
     }
 }
+=======
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Simcag.AlertService.Application.UseCases.GetAlerts
+{
+    internal class GetAlertsHandler
+    {
+    }
+}
+>>>>>>> 23a5c09dab3fb6f834f5f4642538e5640262907f

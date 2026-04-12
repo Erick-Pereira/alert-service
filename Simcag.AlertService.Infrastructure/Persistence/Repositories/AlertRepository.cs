@@ -1,4 +1,11 @@
+<<<<<<< HEAD
 ﻿using Microsoft.EntityFrameworkCore;
+=======
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using Microsoft.EntityFrameworkCore;
+>>>>>>> 23a5c09dab3fb6f834f5f4642538e5640262907f
 using Simcag.AlertService.Application.Interfaces;
 using Simcag.AlertService.Domain.Entities;
 using Simcag.AlertService.Infrastructure.Persistence.DbContext;
@@ -34,6 +41,7 @@ public class AlertRepository : IAlertRepository
             .ToListAsync();
     }
 
+<<<<<<< HEAD
     public async Task<IEnumerable<Alert>> GetFilteredAsync(
         int page,
         int pageSize,
@@ -68,9 +76,15 @@ public class AlertRepository : IAlertRepository
         return await query.CountAsync();
     }
 
+=======
+>>>>>>> 23a5c09dab3fb6f834f5f4642538e5640262907f
     public async Task UpdateAsync(Alert alert)
     {
         _context.Alerts.Update(alert);
         await _context.SaveChangesAsync();
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 23a5c09dab3fb6f834f5f4642538e5640262907f
