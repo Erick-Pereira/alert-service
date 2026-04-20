@@ -1,6 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Simcag.AlertService.Domain.Entities;
 
@@ -21,18 +18,23 @@ public class AlertDbContext : Microsoft.EntityFrameworkCore.DbContext
         {
             entity.HasKey(a => a.Id);
 
-            entity.Property(a => a.ProductName)
+            entity.Property(a => a.ProductId)
                 .IsRequired()
-                .HasMaxLength(200);
+                .HasMaxLength(100);
 
-            entity.Property(a => a.OriginalPrice)
-                .HasColumnType("decimal(18,2)");
+            entity.Property(a => a.Type)
+                .IsRequired()
+                .HasMaxLength(20);
 
-            entity.Property(a => a.MarketPrice)
-                .HasColumnType("decimal(18,2)");
+            entity.Property(a => a.Message)
+                .IsRequired()
+                .HasMaxLength(500);
 
-            entity.Property(a => a.DeviationPercentage)
-                .HasColumnType("decimal(5,2)");
+            entity.Property(a => a.CreatedAt)
+                .IsRequired();
+
+            entity.HasIndex(a => a.ProductId);
+            entity.HasIndex(a => a.CreatedAt);
         });
     }
 }

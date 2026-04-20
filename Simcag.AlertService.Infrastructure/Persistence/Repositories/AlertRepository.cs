@@ -1,14 +1,10 @@
-<<<<<<< HEAD
-﻿using Microsoft.EntityFrameworkCore;
-=======
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+
 using Microsoft.EntityFrameworkCore;
->>>>>>> 23a5c09dab3fb6f834f5f4642538e5640262907f
 using Simcag.AlertService.Application.Interfaces;
 using Simcag.AlertService.Domain.Entities;
 using Simcag.AlertService.Infrastructure.Persistence.DbContext;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Simcag.AlertService.Infrastructure.Persistence.Repositories;
 
@@ -21,70 +17,17 @@ public class AlertRepository : IAlertRepository
         _context = context;
     }
 
-    public async Task AddAsync(Alert alert)
+    public async Task AddAsync(Alert alert, CancellationToken ct)
     {
-        await _context.Alerts.AddAsync(alert);
-        await _context.SaveChangesAsync();
+        await _context.Alerts.AddAsync(alert, ct);
+        await _context.SaveChangesAsync(ct);
     }
 
-    public async Task<Alert?> GetByIdAsync(Guid id)
-    {
-        return await _context.Alerts.FindAsync(id);
-    }
-
-    public async Task<IEnumerable<Alert>> GetAllAsync(int page, int pageSize)
+    public async Task<Alert?> GetLastByProductIdAsync(string productId, CancellationToken ct)
     {
         return await _context.Alerts
+            .Where(a => a.ProductId == productId)
             .OrderByDescending(a => a.CreatedAt)
-            .Skip((page - 1) * pageSize)
-            .Take(pageSize)
-            .ToListAsync();
+            .FirstOrDefaultAsync(ct);
     }
-
-<<<<<<< HEAD
-    public async Task<IEnumerable<Alert>> GetFilteredAsync(
-        int page,
-        int pageSize,
-        string? level,
-        bool? isRead)
-    {
-        var query = _context.Alerts.AsQueryable();
-
-        if (!string.IsNullOrEmpty(level))
-            query = query.Where(a => a.AlertLevel == level);
-
-        if (isRead.HasValue)
-            query = query.Where(a => a.IsRead == isRead.Value);
-
-        return await query
-            .OrderByDescending(a => a.CreatedAt)
-            .Skip((page - 1) * pageSize)
-            .Take(pageSize)
-            .ToListAsync();
-    }
-
-    public async Task<int> CountAsync(bool? isRead = null, string? level = null)
-    {
-        var query = _context.Alerts.AsQueryable();
-
-        if (!string.IsNullOrEmpty(level))
-            query = query.Where(a => a.AlertLevel == level);
-
-        if (isRead.HasValue)
-            query = query.Where(a => a.IsRead == isRead.Value);
-
-        return await query.CountAsync();
-    }
-
-=======
->>>>>>> 23a5c09dab3fb6f834f5f4642538e5640262907f
-    public async Task UpdateAsync(Alert alert)
-    {
-        _context.Alerts.Update(alert);
-        await _context.SaveChangesAsync();
-    }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 23a5c09dab3fb6f834f5f4642538e5640262907f

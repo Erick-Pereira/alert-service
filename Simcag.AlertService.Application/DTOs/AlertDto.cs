@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-<<<<<<< HEAD
 using Simcag.AlertService.Application.DTOs;
 
 namespace Simcag.AlertService.Application.DTOs
@@ -15,12 +14,3 @@ namespace Simcag.AlertService.Application.DTOs
         public DateTime CreatedAt { get; set; }
     }
 }
-=======
-
-namespace Simcag.AlertService.Application.DTOs
-{
-    internal class AlertDto
-    {
-    }
-}
->>>>>>> 23a5c09dab3fb6f834f5f4642538e5640262907f
