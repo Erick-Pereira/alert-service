@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "dgSpecHash": "y4PQZe3kXHU=",
+  "success": true,
+  "projectFilePath": "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Api\\Simcag.AlertService.Api.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Shelow\\.nuget\\packages\\dotnetenv\\3.1.1\\dotnetenv.3.1.1.nupkg.sha512",
+    "C:\\Users\\Shelow\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.4\\microsoft.aspnetcore.openapi.10.0.4.nupkg.sha512",
+    "C:\\Users\\Shelow\\.nuget\\packages\\microsoft.extensions.apidescription.server\\10.0.0\\microsoft.extensions.apidescription.server.10.0.0.nupkg.sha512",
+    "C:\\Users\\Shelow\\.nuget\\packages\\microsoft.extensions.caching.stackexchangeredis\\10.0.5\\microsoft.extensions.caching.stackexchangeredis.10.0.5.nupkg.sha512",
+    "C:\\Users\\Shelow\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\Shelow\\.nuget\\packages\\microsoft.openapi\\2.4.1\\microsoft.openapi.2.4.1.nupkg.sha512",
+    "C:\\Users\\Shelow\\.nuget\\packages\\netstandard.library\\1.6.1\\netstandard.library.1.6.1.nupkg.sha512",
+    "C:\\Users\\Shelow\\.nuget\\packages\\pipelines.sockets.unofficial\\2.2.8\\pipelines.sockets.unofficial.2.2.8.nupkg.sha512",
+    "C:\\Users\\Shelow\\.nuget\\packages\\rabbitmq.client\\6.8.1\\rabbitmq.client.6.8.1.nupkg.sha512",
+    "C:\\Users\\Shelow\\.nuget\\packages\\sprache\\2.3.1\\sprache.2.3.1.nupkg.sha512",
+    "C:\\Users\\Shelow\\.nuget\\packages\\stackexchange.redis\\2.7.27\\stackexchange.redis.2.7.27.nupkg.sha512",
+    "C:\\Users\\Shelow\\.nuget\\packages\\swashbuckle.aspnetcore\\10.1.7\\swashbuckle.aspnetcore.10.1.7.nupkg.sha512",
+    "C:\\Users\\Shelow\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\10.1.7\\swashbuckle.aspnetcore.swagger.10.1.7.nupkg.sha512",
+    "C:\\Users\\Shelow\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\10.1.7\\swashbuckle.aspnetcore.swaggergen.10.1.7.nupkg.sha512",
+    "C:\\Users\\Shelow\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\10.1.7\\swashbuckle.aspnetcore.swaggerui.10.1.7.nupkg.sha512",
+    "C:\\Users\\Shelow\\.nuget\\packages\\simcag.shared\\1.0.0\\simcag.shared.1.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
