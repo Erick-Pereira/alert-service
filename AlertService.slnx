@@ -1,8 +1,0 @@
-<Solution>
-  <Project Path="../shared/shared.csproj" />
-  <Project Path="Simcag.AlertService.Api/Simcag.AlertService.Api.csproj" />
-  <Project Path="Simcag.AlertService.Application/Simcag.AlertService.Application.csproj" />
-  <Project Path="Simcag.AlertService.Domain/Simcag.AlertService.Domain.csproj" />
-  <Project Path="Simcag.AlertService.Infrastructure/Simcag.AlertService.Infrastructure.csproj" />
-  <Project Path="Simcag.AlertService.Tests/Simcag.AlertService.Tests.csproj" />
-</Solution>

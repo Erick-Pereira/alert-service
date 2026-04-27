@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Simcag.AlertService.Infrastructure.Cache;
 
-public class RedisAlertDeduplicationCache : IRedisCacheService
+public class RedisAlertDeduplicationCache : ICacheService
 {
     private readonly IDistributedCache _cache;
     private readonly ILogger<RedisAlertDeduplicationCache> _logger;
@@ -91,52 +91,6 @@ public class RedisAlertDeduplicationCache : IRedisCacheService
                 "{EntityType}:{EntityId}",
                 entityType,
                 entityId);
-        }
-    }
-
-    public async Task<T?> GetAsync<T>(
-        string key,
-        CancellationToken ct) where T : class
-    {
-        try
-        {
-            var cached = await _cache.GetStringAsync(key, ct);
-            if (string.IsNullOrEmpty(cached)) return null;
-
-            return JsonSerializer.Deserialize<T>(cached);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogWarning(
-                ex,
-                "Failed to get cached value for key {Key}",
-                key);
-            return null;
-        }
-    }
-
-    public async Task SetAsync<T>(
-        string key,
-        T value,
-        TimeSpan ttl,
-        CancellationToken ct) where T : class
-    {
-        try
-        {
-            var serialized = JsonSerializer.Serialize(value);
-            var options = new DistributedCacheEntryOptions
-            {
-                AbsoluteExpirationRelativeToNow = ttl
-            };
-
-            await _cache.SetStringAsync(key, serialized, options, ct);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogWarning(
-                ex,
-                "Failed to set cached value for key {Key}",
-                key);
         }
     }
 

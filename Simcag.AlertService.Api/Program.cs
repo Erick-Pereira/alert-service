@@ -1,77 +1,148 @@
-using Microsoft.AspNetCore.Mvc;
-using Simcag.AlertService.Api.Controllers;
+using Simcag.AlertService.Api;
+using Simcag.AlertService.Application.EvaluationStrategies;
 using Simcag.AlertService.Application.Interfaces;
 using Simcag.AlertService.Application.Services;
+using Simcag.AlertService.Application.UseCases.EvaluateAlert;
+using Simcag.AlertService.Application.Workers;
+using Simcag.AlertService.Domain.Services;
 using Simcag.AlertService.Infrastructure.Cache;
 using Simcag.AlertService.Infrastructure.Messaging;
+using Simcag.AlertService.Infrastructure.Persistence.Repositories;
+using Simcag.AlertService.Infrastructure.Persistence.DbContext;
 using Simcag.Shared.Events;
 using Simcag.Shared.Messaging;
 using Simcag.Shared.Messaging.Configuration;
 using Simcag.Shared.Messaging.Extensions;
-using Simcag.Shared.Messaging.Contracts;
-using RabbitMQ.Client;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.StackExchangeRedis;
+using Microsoft.Extensions.DependencyInjection;
 using DotNetEnv;
 
-Env.Load();
-
+DotNetEnv.Env.Load();
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container
+static string? GetEnv(params string[] keys)
+{
+    foreach (var key in keys)
+    {
+        var value = Environment.GetEnvironmentVariable(key);
+        if (!string.IsNullOrWhiteSpace(value))
+            return value;
+    }
+    return null;
+}
+
+static bool EfMigrationsOptOut() =>
+    GetEnv("SKIP_EF_MIGRATIONS", "MIGRATIONS__SKIP") is { } s
+    && (s is "1"
+        || s.Equals("true", StringComparison.OrdinalIgnoreCase)
+        || s.Equals("yes", StringComparison.OrdinalIgnoreCase)
+        || s.Equals("on", StringComparison.OrdinalIgnoreCase));
+
+// Database (.env: ConnectionStrings__DefaultConnection; sem appsettings para secretos)
+if (builder.Environment.IsEnvironment("Testing"))
+{
+    builder.Services.AddDbContext<AlertDbContext>(options =>
+        options.UseInMemoryDatabase("alert_testing"));
+}
+else
+{
+    var defaultConnection = GetEnv("ConnectionStrings__DefaultConnection", "CONNECTIONSTRINGS__DEFAULTCONNECTION")
+        ?? throw new InvalidOperationException("Defina ConnectionStrings__DefaultConnection no .env (PostgreSQL).");
+    builder.Services.AddDbContext<AlertDbContext>(options =>
+        options.UseNpgsql(defaultConnection));
+}
+
+// Redis opcional: deduplicação de alertas; sem REDIS, usa memória in-process
+var redisConnection = GetEnv("REDIS_CONNECTION", "REDIS__CONNECTION");
+if (!string.IsNullOrWhiteSpace(redisConnection))
+{
+    builder.Services.AddStackExchangeRedisCache(options =>
+    {
+        options.Configuration = redisConnection;
+        options.InstanceName = "AlertService:";
+    });
+}
+else
+{
+    builder.Services.AddDistributedMemoryCache();
+}
+
+// RabbitMQ (omitted in the Testing host so WebApplicationFactory does not require a broker)
+if (!builder.Environment.IsEnvironment("Testing"))
+{
+    var rabbitMqOptions = new RabbitMqOptions
+    {
+        Host = GetEnv("RABBITMQ_HOST", "RABBITMQ__HOST") ?? "localhost",
+        Port = int.Parse(GetEnv("RABBITMQ_PORT", "RABBITMQ__PORT") ?? "5672"),
+        UserName = GetEnv("RABBITMQ_USERNAME", "RABBITMQ__USERNAME") ?? "guest",
+        Password = GetEnv("RABBITMQ_PASSWORD", "RABBITMQ__PASSWORD") ?? "guest",
+        VirtualHost = GetEnv("RABBITMQ_VIRTUALHOST", "RABBITMQ__VIRTUALHOST") ?? "/"
+    };
+
+    builder.Services.AddSingleton(rabbitMqOptions);
+    builder.Services.AddRabbitMqMessaging(rabbitMqOptions);
+    builder.Services.AddRabbitMqPublisher("alert-monitoring-exchange");
+    var eventsExchange = EventBusConstants.GetEventsExchangeName();
+    builder.Services.AddRabbitMqEventConsumer<PriceAnalysisCompletedEvent>(EventNames.PriceAnalysisCompleted, eventsExchange);
+    builder.Services.AddHostedService<PriceAnalysisAlertWorker>();
+    builder.Services.AddScoped<IEventBus, RabbitMqEventBus>();
+}
+else
+{
+    builder.Services.AddScoped<IEventBus, NoOpEventBus>();
+}
+
+// Infrastructure Services
+builder.Services.AddScoped<IAlertRepository, AlertRepository>();
+builder.Services.AddScoped<IAlertRuleRepository, AlertRuleRepository>();
+builder.Services.AddScoped<ICacheService, RedisAlertDeduplicationCache>();
+
+// Domain Evaluation Strategies (registered as Scoped)
+builder.Services.AddScoped<IAlertEvaluationStrategy, OverpriceMarketEvaluationStrategy>();
+builder.Services.AddScoped<IAlertEvaluationStrategy, HistoricalOverpriceEvaluationStrategy>();
+builder.Services.AddScoped<IAlertEvaluationStrategy, SupplierEscalationEvaluationStrategy>();
+builder.Services.AddScoped<IAlertEvaluationStrategy, SupplierConcentrationEvaluationStrategy>();
+builder.Services.AddScoped<IAlertEvaluationStrategy, InvalidApportionmentEvaluationStrategy>();
+
+// Application Services
+builder.Services.AddScoped<IAlertRuleService, AlertClassificationService>();
+builder.Services.AddScoped<IAlertService, EvaluateAlertHandler>();
+
+// Controllers & API
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Health checks
+// Health Checks
 builder.Services.AddHealthChecks();
-
-// Distributed cache (Redis)
-builder.Services.AddStackExchangeRedisCache(options =>
-{
-    options.Configuration = Environment.GetEnvironmentVariable("REDIS_CONNECTION") ?? "localhost:6379";
-    options.InstanceName = "AlertService:";
-});
-
-// RabbitMQ Configuration
-var rabbitMqOptions = new RabbitMqOptions
-{
-    Host = Environment.GetEnvironmentVariable("RABBITMQ__HOST") ?? "localhost",
-    Port = int.Parse(Environment.GetEnvironmentVariable("RABBITMQ__PORT") ?? "5672"),
-    UserName = Environment.GetEnvironmentVariable("RABBITMQ__USERNAME") ?? "guest",
-    Password = Environment.GetEnvironmentVariable("RABBITMQ__PASSWORD") ?? "guest",
-    VirtualHost = Environment.GetEnvironmentVariable("RABBITMQ__VIRTUALHOST") ?? "/"
-};
-
-builder.Services.AddSingleton(rabbitMqOptions);
-builder.Services.AddRabbitMqMessaging(rabbitMqOptions);
-
-// Register Event Publishers
-builder.Services.AddSingleton<IEventPublisher<AlertTriggeredEvent>, RabbitMqAlertPublisher>();
-
-// Register Application Services
-builder.Services.AddScoped<IAlertRuleService, AlertClassificationService>();
-builder.Services.AddScoped<IRedisCacheService, RedisAlertDeduplicationCache>();
-builder.Services.AddScoped<IAlertService, AlertOrchestrator>();
-
-// Register Workers
-builder.Services.AddHostedService<PriceAnalysisEventConsumer>();
-
-// HTTP Client
-builder.Services.AddHttpClient();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline
+if (app.Environment.IsDevelopment() && !EfMigrationsOptOut())
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var db = scope.ServiceProvider.GetRequiredService<AlertDbContext>();
+        await db.Database.MigrateAsync();
+    }
+}
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+if (!app.Environment.IsEnvironment("Testing"))
+    app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
 app.MapHealthChecks("/health");
 
 app.Run();
+
+public partial class Program
+{
+}

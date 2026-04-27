@@ -1,7 +1,7 @@
 using Simcag.AlertService.Application.Interfaces;
 using Simcag.Shared.Events;
 using Simcag.Shared.Messaging;
-using Simcag.Shared.Messaging.Contracts;
+using Simcag.Shared.Messaging.Abstractions;
 using Microsoft.Extensions.Logging;
 using System.Text.Json;
 using System.Threading;
@@ -11,14 +11,14 @@ namespace Simcag.AlertService.Infrastructure.Messaging;
 
 public class RabbitMqAlertPublisher : IEventPublisher<AlertTriggeredEvent>
 {
-    private readonly IEventPublisher _eventPublisher;
+    private readonly IPublisher _rabbitMqPublisher;
     private readonly ILogger<RabbitMqAlertPublisher> _logger;
 
     public RabbitMqAlertPublisher(
-        IEventPublisher eventPublisher,
+        IPublisher rabbitMqPublisher,
         ILogger<RabbitMqAlertPublisher> logger)
     {
-        _eventPublisher = eventPublisher;
+        _rabbitMqPublisher = rabbitMqPublisher;
         _logger = logger;
     }
 
@@ -30,16 +30,10 @@ public class RabbitMqAlertPublisher : IEventPublisher<AlertTriggeredEvent>
         {
             var messageBody = JsonSerializer.Serialize(message);
 
-            await _eventPublisher.PublishAsync(
-                "alert-monitoring-exchange",
-                "alert.triggered",
+            await _rabbitMqPublisher.PublishAsync(
                 messageBody,
-                new Dictionary<string, object>
-                {
-                    { "AlertId", message.AlertId },
-                    { "Severity", message.Severity },
-                    { "ProductId", message.ProductId }
-                });
+                EventNames.AlertTriggered,
+                ct);
 
             _logger.LogInformation(
                 "Published AlertTriggeredEvent {AlertId} to RabbitMQ",

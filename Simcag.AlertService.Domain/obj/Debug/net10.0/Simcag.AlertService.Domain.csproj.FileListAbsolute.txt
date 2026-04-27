@@ -1,5 +1,16 @@
+F:\p\simcag\alert-service\Simcag.AlertService.Domain\bin\Debug\net10.0\Simcag.AlertService.Domain.deps.json
+F:\p\simcag\alert-service\Simcag.AlertService.Domain\bin\Debug\net10.0\Simcag.AlertService.Domain.dll
+F:\p\simcag\alert-service\Simcag.AlertService.Domain\bin\Debug\net10.0\Simcag.AlertService.Domain.pdb
+F:\p\simcag\alert-service\Simcag.AlertService.Domain\bin\Debug\net10.0\shared.dll
+F:\p\simcag\alert-service\Simcag.AlertService.Domain\bin\Debug\net10.0\shared.pdb
 F:\p\simcag\alert-service\Simcag.AlertService.Domain\obj\Debug\net10.0\Simcag.AlertService.Domain.csproj.AssemblyReference.cache
 F:\p\simcag\alert-service\Simcag.AlertService.Domain\obj\Debug\net10.0\Simcag.AlertService.Domain.GeneratedMSBuildEditorConfig.editorconfig
 F:\p\simcag\alert-service\Simcag.AlertService.Domain\obj\Debug\net10.0\Simcag.AlertService.Domain.AssemblyInfoInputs.cache
 F:\p\simcag\alert-service\Simcag.AlertService.Domain\obj\Debug\net10.0\Simcag.AlertService.Domain.AssemblyInfo.cs
 F:\p\simcag\alert-service\Simcag.AlertService.Domain\obj\Debug\net10.0\Simcag.AlertService.Domain.csproj.CoreCompileInputs.cache
+F:\p\simcag\alert-service\Simcag.AlertService.Domain\obj\Debug\net10.0\Simcag.AlertService.Domain.sourcelink.json
+F:\p\simcag\alert-service\Simcag.AlertService.Domain\obj\Debug\net10.0\Simcag.A.00A0F188.Up2Date
+F:\p\simcag\alert-service\Simcag.AlertService.Domain\obj\Debug\net10.0\Simcag.AlertService.Domain.dll
+F:\p\simcag\alert-service\Simcag.AlertService.Domain\obj\Debug\net10.0\refint\Simcag.AlertService.Domain.dll
+F:\p\simcag\alert-service\Simcag.AlertService.Domain\obj\Debug\net10.0\Simcag.AlertService.Domain.pdb
+F:\p\simcag\alert-service\Simcag.AlertService.Domain\obj\Debug\net10.0\ref\Simcag.AlertService.Domain.dll

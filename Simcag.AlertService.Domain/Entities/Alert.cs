@@ -1,4 +1,5 @@
 using Simcag.Shared.Common;
+using Simcag.AlertService.Domain.Enums;
 
 namespace Simcag.AlertService.Domain.Entities;
 
@@ -79,9 +80,6 @@ public class Alert : BaseEntity
 
     private Alert() { } // EF Core
 
-    /// <summary>
-    /// Construtor privado para criação de alertas
-    /// </summary>
     private Alert(
         string productId,
         string productName,

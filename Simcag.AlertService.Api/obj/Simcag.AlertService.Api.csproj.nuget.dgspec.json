@@ -67,6 +67,24 @@
               "target": "Package",
               "version": "[10.0.4, )"
             },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.InMemory": {
+              "target": "Package",
+              "version": "[9.0.0, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[9.0.0, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[10.1.7, )"
@@ -562,6 +580,10 @@
           "targetAlias": "net10.0",
           "dependencies": {
             "Microsoft.Extensions.Caching.Abstractions": {
+              "target": "Package",
+              "version": "[10.0.5, )"
+            },
+            "Microsoft.Extensions.Hosting.Abstractions": {
               "target": "Package",
               "version": "[10.0.5, )"
             },
@@ -1250,9 +1272,6 @@
               },
               "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Domain\\Simcag.AlertService.Domain.csproj": {
                 "projectPath": "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Domain\\Simcag.AlertService.Domain.csproj"
-              },
-              "F:\\p\\simcag\\shared\\shared.csproj": {
-                "projectPath": "F:\\p\\simcag\\shared\\shared.csproj"
               }
             }
           }
@@ -1273,6 +1292,16 @@
         "net10.0": {
           "targetAlias": "net10.0",
           "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.0, )"
+            },
             "Microsoft.Extensions.Caching.StackExchangeRedis": {
               "target": "Package",
               "version": "[10.0.5, )"
@@ -1280,6 +1309,10 @@
             "Microsoft.Extensions.Logging.Abstractions": {
               "target": "Package",
               "version": "[10.0.5, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[9.0.0, )"
             },
             "RabbitMQ.Client": {
               "target": "Package",

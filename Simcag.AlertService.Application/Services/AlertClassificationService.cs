@@ -5,17 +5,23 @@ using Simcag.AlertService.Domain.ValueObjects;
 using Microsoft.Extensions.Logging;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Simcag.AlertService.Application.Services;
 
-public class AlertClassificationService : IAlertRuleService
+/// <summary>
+/// Serviço de classificação de desvios e busca de regras
+/// </summary>
+public sealed class AlertClassificationService : IAlertRuleService
 {
+    private readonly IAlertRuleRepository _ruleRepository;
     private readonly ILogger<AlertClassificationService> _logger;
 
-    public AlertClassificationService(ILogger<AlertClassificationService> logger)
+    public AlertClassificationService(
+        IAlertRuleRepository ruleRepository,
+        ILogger<AlertClassificationService> logger)
     {
+        _ruleRepository = ruleRepository;
         _logger = logger;
     }
 
@@ -24,54 +30,24 @@ public class AlertClassificationService : IAlertRuleService
         string? supplierId,
         CancellationToken ct)
     {
-        // In production, this would fetch from database
-        // For now, return default rules
-        var rules = new List<AlertRule>
-        {
-            AlertRule.Create(
-                "Market Overprice Detection",
-                "Detects when purchase price exceeds market price by threshold",
-                AlertType.OverpriceMarket,
-                15m, // 15% threshold
-                AlertSeverity.Warning),
+        var rules = await _ruleRepository.GetActiveRulesAsync(ct);
 
-            AlertRule.Create(
-                "Historical Deviation Detection",
-                "Detects significant deviation from historical average",
-                AlertType.OverpriceHistorical,
-                15m,
-                AlertSeverity.Warning),
-
-            AlertRule.Create(
-                "Supplier Price Escalation",
-                "Detects consecutive price increases from supplier",
-                AlertType.SupplierEscalation,
-                15m,
-                AlertSeverity.Warning),
-
-            AlertRule.Create(
-                "Supplier Concentration Risk",
-                "Detects over-dependence on single supplier",
-                AlertType.SupplierConcentration,
-                60m, // 60% of category purchases
-                AlertSeverity.Warning),
-
-            AlertRule.Create(
-                "Invalid Apportionment Detection",
-                "Detects invalid cost center apportionment",
-                AlertType.InvalidApportionment,
-                2m, // 2% tolerance
-                AlertSeverity.Critical)
-        };
-
-        // Filter by category if specified
+        // Filtrar por categoria se especificada
         if (!string.IsNullOrEmpty(category))
         {
-            // Could apply category-specific rules here
+            rules = rules.Where(r => 
+                string.IsNullOrEmpty(r.Category) || 
+                r.Category.Equals(category, System.StringComparison.OrdinalIgnoreCase));
         }
 
-        await Task.CompletedTask;
-        return rules.Where(r => r.IsEnabled);
+        if (!string.IsNullOrEmpty(supplierId))
+        {
+            rules = rules.Where(r =>
+                string.IsNullOrEmpty(r.SupplierId) ||
+                r.SupplierId.Equals(supplierId, System.StringComparison.OrdinalIgnoreCase));
+        }
+
+        return rules;
     }
 
     public async Task<DeviationPercentage> CalculateDeviationAsync(

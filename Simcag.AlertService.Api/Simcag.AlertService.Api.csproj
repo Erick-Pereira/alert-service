@@ -8,11 +8,18 @@
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.4" />
-    <PackageReference Include="DotNetEnv" Version="3.1.1" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.7" />
-  </ItemGroup>
+   <ItemGroup>
+     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.4" />
+     <PackageReference Include="DotNetEnv" Version="3.1.1" />
+     <PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.7" />
+     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.0" />
+     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
+       <PrivateAssets>all</PrivateAssets>
+       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+     </PackageReference>
+     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.0" />
+     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.0" />
+   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Simcag.AlertService.Application\Simcag.AlertService.Application.csproj" />

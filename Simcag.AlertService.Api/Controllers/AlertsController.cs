@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Simcag.AlertService.Application.Interfaces;
+using Simcag.AlertService.Application.DTOs;
 using Simcag.AlertService.Domain.Entities;
-using Simcag.AlertService.Domain.ValueObjects;
-using Microsoft.Extensions.Logging;
+using Simcag.Shared.Contracts;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -12,207 +12,90 @@ namespace Simcag.AlertService.Api.Controllers;
 [Route("api/[controller]")]
 public class AlertsController : ControllerBase
 {
-    private readonly IAlertService _alertService;
-    private readonly IAlertRuleService _ruleService;
-    private readonly ILogger<AlertsController> _logger;
+    private readonly IAlertRepository _alertRepository;
 
-    public AlertsController(
-        IAlertService alertService,
-        IAlertRuleService ruleService,
-        ILogger<AlertsController> logger)
+    public AlertsController(IAlertRepository alertRepository)
     {
-        _alertService = alertService;
-        _ruleService = ruleService;
-        _logger = logger;
+        _alertRepository = alertRepository;
     }
 
-    /// <summary>
-    /// Obtém um alerta pelo ID
-    /// </summary>
-    [HttpGet("{id}")]
-    public async Task<ActionResult<AlertDto>> GetById(
-        Guid id,
-        CancellationToken ct)
+    [HttpGet]
+    public async Task<IActionResult> GetAlerts(
+        [FromQuery] int page = 1,
+        [FromQuery] int pageSize = 10,
+        [FromQuery] string? type = null,
+        CancellationToken ct = default)
     {
-        var alert = await _alertService.GetByIdAsync(id, ct);
+        if (page < 1) page = 1;
+        if (pageSize < 1 || pageSize > 100) pageSize = 10;
+
+        var pageData = await _alertRepository.GetPageAsync(page, pageSize, type, ct);
+
+        var result = new PaginatedResult<AlertDto>
+        {
+            Items = pageData.Items.Select(MapToDto).ToList(),
+            TotalCount = pageData.TotalCount,
+            Page = page,
+            PageSize = pageSize,
+            TotalPages = (int)Math.Ceiling(pageData.TotalCount / (double)pageSize)
+        };
+
+        return Ok(ApiResponse<PaginatedResult<AlertDto>>.Ok(result));
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetAlertById(Guid id, CancellationToken ct = default)
+    {
+        var alert = await _alertRepository.GetByIdAsync(id, ct);
 
         if (alert == null)
         {
-            return NotFound(new { Message = "Alerta não encontrado" });
+            return NotFound(ApiResponse<string>.Fail($"Alert with ID {id} not found"));
         }
 
-        return Ok(MapToDto(alert));
+        var dto = MapToDto(alert);
+        return Ok(ApiResponse<AlertDto>.Ok(dto));
     }
 
-    /// <summary>
-    /// Lista alertas de um produto em um intervalo de datas
-    /// </summary>
-    [HttpGet("product/{productId}")]
-    public async Task<ActionResult<IEnumerable<AlertDto>>> GetByProduct(
-        string productId,
-        [FromQuery] DateTime? from,
-        [FromQuery] DateTime? to,
-        CancellationToken ct)
+    [HttpPut("{id}/read")]
+    public async Task<IActionResult> MarkAsRead(Guid id, CancellationToken ct = default)
     {
-        var startDate = from ?? DateTime.UtcNow.AddDays(-30);
-        var endDate = to ?? DateTime.UtcNow;
+        var alert = await _alertRepository.GetByIdForUpdateAsync(id, ct);
+        if (alert is null)
+            return NotFound(ApiResponse<string>.Fail($"Alert with ID {id} not found"));
 
-        var alerts = await _alertService.GetAlertsByProductAsync(
-            productId,
-            startDate,
-            endDate,
-            ct);
+        if (alert.Resolved)
+            return Ok(ApiResponse<string>.Ok("Alert already read"));
 
-        return Ok(alerts.Select(MapToDto));
+        alert.MarkAsResolved();
+        await _alertRepository.UpdateAsync(alert, ct);
+
+        return Ok(ApiResponse<string>.Ok("Alert marked as read"));
     }
 
-    /// <summary>
-    /// Atualiza o threshold (limite) de uma regra de alerta
-    /// </summary>
-    [HttpPut("rules/{ruleId}/threshold")]
-    public async Task<IActionResult> UpdateRuleThreshold(
-        Guid ruleId,
-        [FromBody] UpdateThresholdRequest request,
-        CancellationToken ct)
+    [HttpGet("stats")]
+    public async Task<IActionResult> GetStats(CancellationToken ct = default)
     {
-        if (request.NewThreshold <= 0)
+        var q = await _alertRepository.GetStatsAsync(ct);
+
+        var stats = new AlertStatsDto
         {
-            return BadRequest(new
-            {
-                Message = "O threshold deve ser um valor positivo"
-            });
-        }
+            Total = q.Total,
+            ByType = new Dictionary<string, int>(q.ByType),
+            UnreadCount = q.UnreadCount
+        };
 
-        try
-        {
-            await _alertService.UpdateAlertRuleThresholdAsync(
-                ruleId,
-                request.NewThreshold,
-                ct);
-
-            _logger.LogInformation(
-                "Threshold da regra {RuleId} atualizado para {Threshold}",
-                ruleId,
-                request.NewThreshold);
-
-            return Ok(new
-            {
-                Message = "Threshold atualizado com sucesso",
-                RuleId = ruleId,
-                NewThreshold = request.NewThreshold
-            });
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(
-                ex,
-                "Erro ao atualizar threshold da regra {RuleId}",
-                ruleId);
-
-            return StatusCode(500, new
-            {
-                Message = "Erro interno ao atualizar threshold"
-            });
-        }
+        return Ok(ApiResponse<AlertStatsDto>.Ok(stats));
     }
 
-    /// <summary>
-    /// Retorna as regras de alerta ativas
-    /// </summary>
-    [HttpGet("rules")]
-    public async Task<ActionResult<IEnumerable<AlertRuleDto>>> GetActiveRules(
-        CancellationToken ct)
-    {
-        var rules = await _ruleService.GetActiveRulesAsync(ct);
-        return Ok(rules.Select(MapToRuleDto));
-    }
-
-    /// <summary>
-    /// Health check do serviço de alertas
-    /// </summary>
-    [HttpGet("health")]
-    public IActionResult Health()
-    {
-        return Ok(new
+    private static AlertDto MapToDto(Alert alert) =>
+        new()
         {
-            Status = "healthy",
-            Service = "AlertService",
-            Version = "1.0.0",
-            Features = new[]
-            {
-                "price_deviation_detection",
-                "supplier_escalation_detection",
-                "supplier_concentration_detection",
-                "invalid_apportionment_detection",
-                "historical_deviation_detection"
-            }
-        });
-    }
-
-    private static AlertDto MapToDto(Alert alert) => new()
-    {
-        Id = alert.Id,
-        ProductId = alert.ProductId,
-        ProductName = alert.ProductName,
-        Category = alert.Category,
-        Type = alert.Type,
-        AlertCategory = alert.AlertCategory,
-        Severity = alert.Severity.ToString(),
-        DeviationPercentage = alert.DeviationPercentage,
-        Message = alert.Message,
-        CurrentPrice = alert.CurrentPrice,
-        AveragePrice = alert.AveragePrice,
-        CreatedAt = alert.CreatedAt,
-        AnalyzedAt = alert.AnalyzedAt,
-        Resolved = alert.Resolved,
-        ResolvedAt = alert.ResolvedAt
-    };
-
-    private static AlertRuleDto MapToRuleDto(AlertRule rule) => new()
-    {
-        Id = rule.Id,
-        Name = rule.Name,
-        Description = rule.Description,
-        Type = rule.Type.ToString(),
-        Threshold = rule.Threshold,
-        IsEnabled = rule.IsEnabled,
-        MinDataPoints = rule.MinDataPoints,
-        DefaultSeverity = rule.DefaultSeverity.ToString()
-    };
-}
-
-public class AlertDto
-{
-    public Guid Id { get; set; }
-    public string ProductId { get; set; } = string.Empty;
-    public string ProductName { get; set; } = string.Empty;
-    public string Category { get; set; } = string.Empty;
-    public string Type { get; set; } = string.Empty;
-    public string AlertCategory { get; set; } = string.Empty;
-    public string Severity { get; set; } = string.Empty;
-    public decimal DeviationPercentage { get; set; }
-    public string Message { get; set; } = string.Empty;
-    public decimal CurrentPrice { get; set; }
-    public decimal AveragePrice { get; set; }
-    public DateTime CreatedAt { get; set; }
-    public DateTime AnalyzedAt { get; set; }
-    public bool Resolved { get; set; }
-    public DateTime? ResolvedAt { get; set; }
-}
-
-public class AlertRuleDto
-{
-    public Guid Id { get; set; }
-    public string Name { get; set; } = string.Empty;
-    public string Description { get; set; } = string.Empty;
-    public string Type { get; set; } = string.Empty;
-    public decimal Threshold { get; set; }
-    public bool IsEnabled { get; set; }
-    public int MinDataPoints { get; set; }
-    public string DefaultSeverity { get; set; } = string.Empty;
-}
-
-public class UpdateThresholdRequest
-{
-    public decimal NewThreshold { get; set; }
+            Id = alert.Id,
+            ProductId = alert.ProductId,
+            Type = alert.Type,
+            Message = alert.Message,
+            CreatedAt = alert.CreatedAt,
+            Resolved = alert.Resolved
+        };
 }

@@ -1,0 +1,46 @@
+using Simcag.AlertService.Domain.Entities;
+using Simcag.AlertService.Domain.Enums;
+using Simcag.AlertService.Domain.Services;
+using Simcag.AlertService.Domain.ValueObjects;
+using Simcag.Shared.Events;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace Simcag.AlertService.Application.EvaluationStrategies;
+
+/// <summary>
+/// Estratégia para avaliação de superfaturamento vs preço de mercado
+/// </summary>
+public sealed class OverpriceMarketEvaluationStrategy : IAlertEvaluationStrategy
+{
+    public AlertType SupportedType => AlertType.OverpriceMarket;
+
+    public Alert? Evaluate(AlertRule rule, PriceAnalysisCompletedEvent evt)
+    {
+        if (evt.MarketPrice <= 0) return null;
+
+        var deviation = (evt.LastPrice - evt.MarketPrice) / evt.MarketPrice * 100m;
+
+        if (!DeviationPercentage.Create(deviation).IsAboveThreshold(rule.Threshold)) 
+            return null;
+
+        var severity = deviation >= 25m ? AlertSeverity.Critical :
+                       deviation >= 15m ? AlertSeverity.Medium :
+                       AlertSeverity.Low;
+
+        var message = $"Superfaturamento: NF R$ {evt.LastPrice:F2} vs " +
+            $"mercado R$ {evt.MarketPrice:F2} ({deviation:F1}%)";
+
+        return Alert.Create(
+            evt.ProductId, evt.ProductName, evt.Category,
+            "OverpriceMarket", "Superfaturamento",
+            severity, deviation, message,
+            evt.LastPrice, evt.MarketPrice, evt.AnalyzedAt);
+    }
+
+    public Task<Alert?> EvaluateAsync(AlertRule rule, PriceAnalysisCompletedEvent evt, CancellationToken ct)
+    {
+        // Síncrono, mas interface requer Task
+        return Task.FromResult(Evaluate(rule, evt));
+    }
+}

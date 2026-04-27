@@ -737,6 +737,7 @@
   "projectFileDependencyGroups": {
     "net10.0": [
       "Microsoft.Extensions.Caching.Abstractions >= 10.0.5",
+      "Microsoft.Extensions.Hosting.Abstractions >= 10.0.5",
       "Microsoft.Extensions.Logging.Abstractions >= 10.0.5",
       "Simcag.AlertService.Domain >= 1.0.0"
     ]
@@ -798,6 +799,10 @@
         "targetAlias": "net10.0",
         "dependencies": {
           "Microsoft.Extensions.Caching.Abstractions": {
+            "target": "Package",
+            "version": "[10.0.5, )"
+          },
+          "Microsoft.Extensions.Hosting.Abstractions": {
             "target": "Package",
             "version": "[10.0.5, )"
           },
