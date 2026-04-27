@@ -55,7 +55,7 @@ else
 }
 
 // Redis opcional: deduplicação de alertas; sem REDIS, usa memória in-process
-var redisConnection = GetEnv("REDIS_CONNECTION", "REDIS__CONNECTION");
+var redisConnection = GetEnv("REDIS__CONNECTION", "REDIS_CONNECTION");
 if (!string.IsNullOrWhiteSpace(redisConnection))
 {
     builder.Services.AddStackExchangeRedisCache(options =>
@@ -74,11 +74,11 @@ if (!builder.Environment.IsEnvironment("Testing"))
 {
     var rabbitMqOptions = new RabbitMqOptions
     {
-        Host = GetEnv("RABBITMQ_HOST", "RABBITMQ__HOST") ?? "localhost",
-        Port = int.Parse(GetEnv("RABBITMQ_PORT", "RABBITMQ__PORT") ?? "5672"),
-        UserName = GetEnv("RABBITMQ_USERNAME", "RABBITMQ__USERNAME") ?? "guest",
-        Password = GetEnv("RABBITMQ_PASSWORD", "RABBITMQ__PASSWORD") ?? "guest",
-        VirtualHost = GetEnv("RABBITMQ_VIRTUALHOST", "RABBITMQ__VIRTUALHOST") ?? "/"
+        Host = GetEnv("RABBITMQ__HOST", "RABBITMQ_HOST") ?? "localhost",
+        Port = int.Parse(GetEnv("RABBITMQ__PORT", "RABBITMQ_PORT") ?? "5672"),
+        UserName = GetEnv("RABBITMQ__USERNAME", "RABBITMQ_USERNAME") ?? "guest",
+        Password = GetEnv("RABBITMQ__PASSWORD", "RABBITMQ_PASSWORD") ?? "guest",
+        VirtualHost = GetEnv("RABBITMQ__VIRTUALHOST", "RABBITMQ_VIRTUALHOST") ?? "/"
     };
 
     builder.Services.AddSingleton(rabbitMqOptions);
