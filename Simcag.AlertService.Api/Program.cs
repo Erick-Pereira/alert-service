@@ -113,7 +113,23 @@ builder.Services.AddScoped<IAlertService, EvaluateAlertHandler>();
 // Controllers & API
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new Microsoft.OpenApi.OpenApiInfo { Title = "SIMC-AG Service", Version = "v1" });
+    c.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.OpenApiSecurityScheme
+    {
+        Name        = "Authorization",
+        In          = Microsoft.OpenApi.ParameterLocation.Header,
+        Type        = Microsoft.OpenApi.SecuritySchemeType.Http,
+        Scheme      = "bearer",
+        BearerFormat = "JWT",
+        Description = "Cole apenas o JWT (sem 'Bearer ')."
+    });
+    c.AddSecurityRequirement(document => new Microsoft.OpenApi.OpenApiSecurityRequirement
+    {
+        [new Microsoft.OpenApi.OpenApiSecuritySchemeReference("Bearer", document)] = []
+    });
+});
 
 // Health Checks
 builder.Services.AddHealthChecks();
