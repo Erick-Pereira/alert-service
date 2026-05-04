@@ -18,9 +18,12 @@ using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.StackExchangeRedis;
 using Microsoft.Extensions.DependencyInjection;
 using DotNetEnv;
+using Simcag.Shared.Hosting;
 
-DotNetEnv.Env.Load();
+DotNetEnv.Env.NoClobber().Load();
+ContainerListenConfiguration.NormalizeAspNetCoreListenUrlsInContainer();
 var builder = WebApplication.CreateBuilder(args);
+ContainerListenConfiguration.ApplyDockerListenUrls(builder);
 
 static string? GetEnv(params string[] keys)
 {

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "l350IIhs6h8=",
+  "dgSpecHash": "+/AWKAis6ks=",
   "success": true,
   "projectFilePath": "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Api\\Simcag.AlertService.Api.csproj",
   "expectedPackageFiles": [
@@ -36,6 +36,7 @@
     "C:\\Users\\Shelow\\.nuget\\packages\\npgsql.entityframeworkcore.postgresql\\10.0.0\\npgsql.entityframeworkcore.postgresql.10.0.0.nupkg.sha512",
     "C:\\Users\\Shelow\\.nuget\\packages\\pipelines.sockets.unofficial\\2.2.8\\pipelines.sockets.unofficial.2.2.8.nupkg.sha512",
     "C:\\Users\\Shelow\\.nuget\\packages\\rabbitmq.client\\6.8.1\\rabbitmq.client.6.8.1.nupkg.sha512",
+    "C:\\Users\\Shelow\\.nuget\\packages\\simcag.shared\\1.0.1\\simcag.shared.1.0.1.nupkg.sha512",
     "C:\\Users\\Shelow\\.nuget\\packages\\sprache\\2.3.1\\sprache.2.3.1.nupkg.sha512",
     "C:\\Users\\Shelow\\.nuget\\packages\\stackexchange.redis\\2.7.27\\stackexchange.redis.2.7.27.nupkg.sha512",
     "C:\\Users\\Shelow\\.nuget\\packages\\swashbuckle.aspnetcore\\10.1.7\\swashbuckle.aspnetcore.10.1.7.nupkg.sha512",
@@ -53,11 +54,11 @@
     "C:\\Users\\Shelow\\.nuget\\packages\\system.formats.nrbf\\9.0.0\\system.formats.nrbf.9.0.0.nupkg.sha512",
     "C:\\Users\\Shelow\\.nuget\\packages\\system.reflection.metadataloadcontext\\7.0.0\\system.reflection.metadataloadcontext.7.0.0.nupkg.sha512",
     "C:\\Users\\Shelow\\.nuget\\packages\\system.resources.extensions\\9.0.0\\system.resources.extensions.9.0.0.nupkg.sha512",
-    "C:\\Users\\Shelow\\.nuget\\packages\\system.security.cryptography.pkcs\\9.0.0\\system.security.cryptography.pkcs.9.0.0.nupkg.sha512",
+    "C:\\Users\\Shelow\\.nuget\\packages\\system.security.cryptography.pkcs\\10.0.7\\system.security.cryptography.pkcs.10.0.7.nupkg.sha512",
     "C:\\Users\\Shelow\\.nuget\\packages\\system.security.cryptography.protecteddata\\9.0.0\\system.security.cryptography.protecteddata.9.0.0.nupkg.sha512",
-    "C:\\Users\\Shelow\\.nuget\\packages\\system.security.permissions\\9.0.0\\system.security.permissions.9.0.0.nupkg.sha512",
-    "C:\\Users\\Shelow\\.nuget\\packages\\system.windows.extensions\\9.0.0\\system.windows.extensions.9.0.0.nupkg.sha512",
-    "C:\\Users\\Shelow\\.nuget\\packages\\simcag.shared\\1.0.0\\simcag.shared.1.0.0.nupkg.sha512"
+    "C:\\Users\\Shelow\\.nuget\\packages\\system.security.cryptography.xml\\10.0.7\\system.security.cryptography.xml.10.0.7.nupkg.sha512",
+    "C:\\Users\\Shelow\\.nuget\\packages\\system.security.permissions\\10.0.7\\system.security.permissions.10.0.7.nupkg.sha512",
+    "C:\\Users\\Shelow\\.nuget\\packages\\system.windows.extensions\\10.0.7\\system.windows.extensions.10.0.7.nupkg.sha512"
   ],
   "logs": []
 }

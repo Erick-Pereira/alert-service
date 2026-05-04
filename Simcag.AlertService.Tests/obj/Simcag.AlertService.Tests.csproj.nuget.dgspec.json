@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Tests\\Simcag.AlertService.Tests.csproj": {}
+    "f:\\p\\simcag\\alert-service\\Simcag.AlertService.Tests\\Simcag.AlertService.Tests.csproj": {}
   },
   "projects": {
-    "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Api\\Simcag.AlertService.Api.csproj": {
+    "f:\\p\\simcag\\alert-service\\Simcag.AlertService.Api\\Simcag.AlertService.Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Api\\Simcag.AlertService.Api.csproj",
+        "projectUniqueName": "f:\\p\\simcag\\alert-service\\Simcag.AlertService.Api\\Simcag.AlertService.Api.csproj",
         "projectName": "Simcag.AlertService.Api",
-        "projectPath": "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Api\\Simcag.AlertService.Api.csproj",
+        "projectPath": "f:\\p\\simcag\\alert-service\\Simcag.AlertService.Api\\Simcag.AlertService.Api.csproj",
         "packagesPath": "C:\\Users\\Shelow\\.nuget\\packages\\",
-        "outputPath": "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Api\\obj\\",
+        "outputPath": "f:\\p\\simcag\\alert-service\\Simcag.AlertService.Api\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "F:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -34,16 +34,19 @@
           "net10.0": {
             "targetAlias": "net10.0",
             "projectReferences": {
-              "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Application\\Simcag.AlertService.Application.csproj": {
-                "projectPath": "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Application\\Simcag.AlertService.Application.csproj"
+              "f:\\p\\simcag\\alert-service\\Simcag.AlertService.Application\\Simcag.AlertService.Application.csproj": {
+                "projectPath": "f:\\p\\simcag\\alert-service\\Simcag.AlertService.Application\\Simcag.AlertService.Application.csproj"
               },
-              "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Infrastructure\\Simcag.AlertService.Infrastructure.csproj": {
-                "projectPath": "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Infrastructure\\Simcag.AlertService.Infrastructure.csproj"
+              "f:\\p\\simcag\\alert-service\\Simcag.AlertService.Infrastructure\\Simcag.AlertService.Infrastructure.csproj": {
+                "projectPath": "f:\\p\\simcag\\alert-service\\Simcag.AlertService.Infrastructure\\Simcag.AlertService.Infrastructure.csproj"
               }
             }
           }
         },
         "warningProperties": {
+          "noWarn": [
+            "NU1510"
+          ],
           "warnAsError": [
             "NU1605"
           ]
@@ -88,6 +91,14 @@
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[10.1.7, )"
+            },
+            "System.Security.Cryptography.Xml": {
+              "target": "Package",
+              "version": "[10.0.7, )"
+            },
+            "System.Security.Permissions": {
+              "target": "Package",
+              "version": "[10.0.7, )"
             }
           },
           "imports": [
@@ -527,14 +538,14 @@
         }
       }
     },
-    "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Application\\Simcag.AlertService.Application.csproj": {
+    "f:\\p\\simcag\\alert-service\\Simcag.AlertService.Application\\Simcag.AlertService.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Application\\Simcag.AlertService.Application.csproj",
+        "projectUniqueName": "f:\\p\\simcag\\alert-service\\Simcag.AlertService.Application\\Simcag.AlertService.Application.csproj",
         "projectName": "Simcag.AlertService.Application",
-        "projectPath": "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Application\\Simcag.AlertService.Application.csproj",
+        "projectPath": "f:\\p\\simcag\\alert-service\\Simcag.AlertService.Application\\Simcag.AlertService.Application.csproj",
         "packagesPath": "C:\\Users\\Shelow\\.nuget\\packages\\",
-        "outputPath": "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Application\\obj\\",
+        "outputPath": "f:\\p\\simcag\\alert-service\\Simcag.AlertService.Application\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "F:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -557,13 +568,16 @@
           "net10.0": {
             "targetAlias": "net10.0",
             "projectReferences": {
-              "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Domain\\Simcag.AlertService.Domain.csproj": {
-                "projectPath": "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Domain\\Simcag.AlertService.Domain.csproj"
+              "f:\\p\\simcag\\alert-service\\Simcag.AlertService.Domain\\Simcag.AlertService.Domain.csproj": {
+                "projectPath": "f:\\p\\simcag\\alert-service\\Simcag.AlertService.Domain\\Simcag.AlertService.Domain.csproj"
               }
             }
           }
         },
         "warningProperties": {
+          "noWarn": [
+            "NU1510"
+          ],
           "warnAsError": [
             "NU1605"
           ]
@@ -590,6 +604,14 @@
             "Microsoft.Extensions.Logging.Abstractions": {
               "target": "Package",
               "version": "[10.0.5, )"
+            },
+            "System.Security.Cryptography.Xml": {
+              "target": "Package",
+              "version": "[10.0.7, )"
+            },
+            "System.Security.Permissions": {
+              "target": "Package",
+              "version": "[10.0.7, )"
             }
           },
           "imports": [
@@ -886,14 +908,14 @@
         }
       }
     },
-    "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Domain\\Simcag.AlertService.Domain.csproj": {
+    "f:\\p\\simcag\\alert-service\\Simcag.AlertService.Domain\\Simcag.AlertService.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Domain\\Simcag.AlertService.Domain.csproj",
+        "projectUniqueName": "f:\\p\\simcag\\alert-service\\Simcag.AlertService.Domain\\Simcag.AlertService.Domain.csproj",
         "projectName": "Simcag.AlertService.Domain",
-        "projectPath": "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Domain\\Simcag.AlertService.Domain.csproj",
+        "projectPath": "f:\\p\\simcag\\alert-service\\Simcag.AlertService.Domain\\Simcag.AlertService.Domain.csproj",
         "packagesPath": "C:\\Users\\Shelow\\.nuget\\packages\\",
-        "outputPath": "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Domain\\obj\\",
+        "outputPath": "f:\\p\\simcag\\alert-service\\Simcag.AlertService.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "F:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -916,13 +938,16 @@
           "net10.0": {
             "targetAlias": "net10.0",
             "projectReferences": {
-              "F:\\p\\simcag\\shared\\shared.csproj": {
-                "projectPath": "F:\\p\\simcag\\shared\\shared.csproj"
+              "f:\\p\\simcag\\shared\\shared.csproj": {
+                "projectPath": "f:\\p\\simcag\\shared\\shared.csproj"
               }
             }
           }
         },
         "warningProperties": {
+          "noWarn": [
+            "NU1510"
+          ],
           "warnAsError": [
             "NU1605"
           ]
@@ -941,6 +966,14 @@
             "Microsoft.Extensions.Logging.Abstractions": {
               "target": "Package",
               "version": "[10.0.5, )"
+            },
+            "System.Security.Cryptography.Xml": {
+              "target": "Package",
+              "version": "[10.0.7, )"
+            },
+            "System.Security.Permissions": {
+              "target": "Package",
+              "version": "[10.0.7, )"
             }
           },
           "imports": [
@@ -1237,14 +1270,14 @@
         }
       }
     },
-    "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Infrastructure\\Simcag.AlertService.Infrastructure.csproj": {
+    "f:\\p\\simcag\\alert-service\\Simcag.AlertService.Infrastructure\\Simcag.AlertService.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Infrastructure\\Simcag.AlertService.Infrastructure.csproj",
+        "projectUniqueName": "f:\\p\\simcag\\alert-service\\Simcag.AlertService.Infrastructure\\Simcag.AlertService.Infrastructure.csproj",
         "projectName": "Simcag.AlertService.Infrastructure",
-        "projectPath": "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Infrastructure\\Simcag.AlertService.Infrastructure.csproj",
+        "projectPath": "f:\\p\\simcag\\alert-service\\Simcag.AlertService.Infrastructure\\Simcag.AlertService.Infrastructure.csproj",
         "packagesPath": "C:\\Users\\Shelow\\.nuget\\packages\\",
-        "outputPath": "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Infrastructure\\obj\\",
+        "outputPath": "f:\\p\\simcag\\alert-service\\Simcag.AlertService.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "F:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -1267,16 +1300,19 @@
           "net10.0": {
             "targetAlias": "net10.0",
             "projectReferences": {
-              "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Application\\Simcag.AlertService.Application.csproj": {
-                "projectPath": "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Application\\Simcag.AlertService.Application.csproj"
+              "f:\\p\\simcag\\alert-service\\Simcag.AlertService.Application\\Simcag.AlertService.Application.csproj": {
+                "projectPath": "f:\\p\\simcag\\alert-service\\Simcag.AlertService.Application\\Simcag.AlertService.Application.csproj"
               },
-              "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Domain\\Simcag.AlertService.Domain.csproj": {
-                "projectPath": "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Domain\\Simcag.AlertService.Domain.csproj"
+              "f:\\p\\simcag\\alert-service\\Simcag.AlertService.Domain\\Simcag.AlertService.Domain.csproj": {
+                "projectPath": "f:\\p\\simcag\\alert-service\\Simcag.AlertService.Domain\\Simcag.AlertService.Domain.csproj"
               }
             }
           }
         },
         "warningProperties": {
+          "noWarn": [
+            "NU1510"
+          ],
           "warnAsError": [
             "NU1605"
           ]
@@ -1317,6 +1353,14 @@
             "RabbitMQ.Client": {
               "target": "Package",
               "version": "[6.8.1, )"
+            },
+            "System.Security.Cryptography.Xml": {
+              "target": "Package",
+              "version": "[10.0.7, )"
+            },
+            "System.Security.Permissions": {
+              "target": "Package",
+              "version": "[10.0.7, )"
             }
           },
           "imports": [
@@ -1613,14 +1657,14 @@
         }
       }
     },
-    "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Tests\\Simcag.AlertService.Tests.csproj": {
+    "f:\\p\\simcag\\alert-service\\Simcag.AlertService.Tests\\Simcag.AlertService.Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Tests\\Simcag.AlertService.Tests.csproj",
+        "projectUniqueName": "f:\\p\\simcag\\alert-service\\Simcag.AlertService.Tests\\Simcag.AlertService.Tests.csproj",
         "projectName": "Simcag.AlertService.Tests",
-        "projectPath": "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Tests\\Simcag.AlertService.Tests.csproj",
+        "projectPath": "f:\\p\\simcag\\alert-service\\Simcag.AlertService.Tests\\Simcag.AlertService.Tests.csproj",
         "packagesPath": "C:\\Users\\Shelow\\.nuget\\packages\\",
-        "outputPath": "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Tests\\obj\\",
+        "outputPath": "f:\\p\\simcag\\alert-service\\Simcag.AlertService.Tests\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "F:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -1643,22 +1687,25 @@
           "net10.0": {
             "targetAlias": "net10.0",
             "projectReferences": {
-              "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Api\\Simcag.AlertService.Api.csproj": {
-                "projectPath": "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Api\\Simcag.AlertService.Api.csproj"
+              "f:\\p\\simcag\\alert-service\\Simcag.AlertService.Api\\Simcag.AlertService.Api.csproj": {
+                "projectPath": "f:\\p\\simcag\\alert-service\\Simcag.AlertService.Api\\Simcag.AlertService.Api.csproj"
               },
-              "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Application\\Simcag.AlertService.Application.csproj": {
-                "projectPath": "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Application\\Simcag.AlertService.Application.csproj"
+              "f:\\p\\simcag\\alert-service\\Simcag.AlertService.Application\\Simcag.AlertService.Application.csproj": {
+                "projectPath": "f:\\p\\simcag\\alert-service\\Simcag.AlertService.Application\\Simcag.AlertService.Application.csproj"
               },
-              "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Domain\\Simcag.AlertService.Domain.csproj": {
-                "projectPath": "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Domain\\Simcag.AlertService.Domain.csproj"
+              "f:\\p\\simcag\\alert-service\\Simcag.AlertService.Domain\\Simcag.AlertService.Domain.csproj": {
+                "projectPath": "f:\\p\\simcag\\alert-service\\Simcag.AlertService.Domain\\Simcag.AlertService.Domain.csproj"
               },
-              "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Infrastructure\\Simcag.AlertService.Infrastructure.csproj": {
-                "projectPath": "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Infrastructure\\Simcag.AlertService.Infrastructure.csproj"
+              "f:\\p\\simcag\\alert-service\\Simcag.AlertService.Infrastructure\\Simcag.AlertService.Infrastructure.csproj": {
+                "projectPath": "f:\\p\\simcag\\alert-service\\Simcag.AlertService.Infrastructure\\Simcag.AlertService.Infrastructure.csproj"
               }
             }
           }
         },
         "warningProperties": {
+          "noWarn": [
+            "NU1510"
+          ],
           "warnAsError": [
             "NU1605"
           ]
@@ -1693,6 +1740,14 @@
             "Moq": {
               "target": "Package",
               "version": "[4.20.72, )"
+            },
+            "System.Security.Cryptography.Xml": {
+              "target": "Package",
+              "version": "[10.0.7, )"
+            },
+            "System.Security.Permissions": {
+              "target": "Package",
+              "version": "[10.0.7, )"
             },
             "coverlet.collector": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
@@ -2003,14 +2058,14 @@
         }
       }
     },
-    "F:\\p\\simcag\\shared\\shared.csproj": {
+    "f:\\p\\simcag\\shared\\shared.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\p\\simcag\\shared\\shared.csproj",
+        "projectUniqueName": "f:\\p\\simcag\\shared\\shared.csproj",
         "projectName": "Simcag.Shared",
-        "projectPath": "F:\\p\\simcag\\shared\\shared.csproj",
+        "projectPath": "f:\\p\\simcag\\shared\\shared.csproj",
         "packagesPath": "C:\\Users\\Shelow\\.nuget\\packages\\",
-        "outputPath": "F:\\p\\simcag\\shared\\obj\\",
+        "outputPath": "f:\\p\\simcag\\shared\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "F:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -2036,6 +2091,9 @@
           }
         },
         "warningProperties": {
+          "noWarn": [
+            "NU1510"
+          ],
           "warnAsError": [
             "NU1605"
           ]
@@ -2051,6 +2109,18 @@
         "net10.0": {
           "targetAlias": "net10.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Http.Abstractions": {
+              "target": "Package",
+              "version": "[2.3.0, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[10.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.Relational": {
+              "target": "Package",
+              "version": "[10.0.0, )"
+            },
             "Microsoft.Extensions.Configuration": {
               "target": "Package",
               "version": "[10.0.5, )"
@@ -2074,6 +2144,14 @@
             "RabbitMQ.Client": {
               "target": "Package",
               "version": "[6.8.1, )"
+            },
+            "System.Security.Cryptography.Xml": {
+              "target": "Package",
+              "version": "[10.0.7, )"
+            },
+            "System.Security.Permissions": {
+              "target": "Package",
+              "version": "[10.0.7, )"
             }
           },
           "imports": [

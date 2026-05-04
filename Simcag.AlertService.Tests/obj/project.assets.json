@@ -55,6 +55,38 @@
           }
         }
       },
+      "Microsoft.AspNetCore.Http.Abstractions/2.3.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Http.Features": "2.3.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Microsoft.AspNetCore.Http.Abstractions.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.AspNetCore.Http.Abstractions.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Microsoft.AspNetCore.Http.Features/2.3.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Primitives": "8.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Microsoft.AspNetCore.Http.Features.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.AspNetCore.Http.Features.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Microsoft.AspNetCore.Mvc.Testing/10.0.0": {
         "type": "package",
         "dependencies": {
@@ -1154,28 +1186,6 @@
           "build/net8.0/Microsoft.TestPlatform.TestHost.targets": {}
         }
       },
-      "Microsoft.Win32.SystemEvents/6.0.0": {
-        "type": "package",
-        "compile": {
-          "lib/net6.0/Microsoft.Win32.SystemEvents.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtime": {
-          "lib/net6.0/Microsoft.Win32.SystemEvents.dll": {
-            "related": ".xml"
-          }
-        },
-        "build": {
-          "buildTransitive/netcoreapp3.1/_._": {}
-        },
-        "runtimeTargets": {
-          "runtimes/win/lib/net6.0/Microsoft.Win32.SystemEvents.dll": {
-            "assetType": "runtime",
-            "rid": "win"
-          }
-        }
-      },
       "Moq/4.20.72": {
         "type": "package",
         "dependencies": {
@@ -1409,30 +1419,23 @@
           }
         }
       },
-      "System.Drawing.Common/6.0.0": {
+      "System.Security.Cryptography.Pkcs/10.0.7": {
         "type": "package",
-        "dependencies": {
-          "Microsoft.Win32.SystemEvents": "6.0.0"
-        },
         "compile": {
-          "lib/net6.0/System.Drawing.Common.dll": {
+          "lib/net10.0/System.Security.Cryptography.Pkcs.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net6.0/System.Drawing.Common.dll": {
+          "lib/net10.0/System.Security.Cryptography.Pkcs.dll": {
             "related": ".xml"
           }
         },
         "build": {
-          "buildTransitive/netcoreapp3.1/_._": {}
+          "buildTransitive/net8.0/_._": {}
         },
         "runtimeTargets": {
-          "runtimes/unix/lib/net6.0/System.Drawing.Common.dll": {
-            "assetType": "runtime",
-            "rid": "unix"
-          },
-          "runtimes/win/lib/net6.0/System.Drawing.Common.dll": {
+          "runtimes/win/lib/net10.0/System.Security.Cryptography.Pkcs.dll": {
             "assetType": "runtime",
             "rid": "win"
           }
@@ -1460,42 +1463,58 @@
           }
         }
       },
-      "System.Security.Permissions/6.0.0": {
+      "System.Security.Cryptography.Xml/10.0.7": {
         "type": "package",
         "dependencies": {
-          "System.Windows.Extensions": "6.0.0"
+          "System.Security.Cryptography.Pkcs": "10.0.7"
         },
         "compile": {
-          "lib/net6.0/System.Security.Permissions.dll": {
+          "lib/net10.0/System.Security.Cryptography.Xml.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net6.0/System.Security.Permissions.dll": {
+          "lib/net10.0/System.Security.Cryptography.Xml.dll": {
             "related": ".xml"
           }
         },
         "build": {
-          "buildTransitive/netcoreapp3.1/_._": {}
+          "buildTransitive/net8.0/_._": {}
         }
       },
-      "System.Windows.Extensions/6.0.0": {
+      "System.Security.Permissions/10.0.7": {
         "type": "package",
         "dependencies": {
-          "System.Drawing.Common": "6.0.0"
+          "System.Windows.Extensions": "10.0.7"
         },
         "compile": {
-          "lib/net6.0/System.Windows.Extensions.dll": {
+          "lib/net10.0/System.Security.Permissions.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net6.0/System.Windows.Extensions.dll": {
+          "lib/net10.0/System.Security.Permissions.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net8.0/_._": {}
+        }
+      },
+      "System.Windows.Extensions/10.0.7": {
+        "type": "package",
+        "compile": {
+          "lib/net10.0/System.Windows.Extensions.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net10.0/System.Windows.Extensions.dll": {
             "related": ".xml"
           }
         },
         "runtimeTargets": {
-          "runtimes/win/lib/net6.0/System.Windows.Extensions.dll": {
+          "runtimes/win/lib/net10.0/System.Windows.Extensions.dll": {
             "assetType": "runtime",
             "rid": "win"
           }
@@ -1608,7 +1627,8 @@
           "Npgsql.EntityFrameworkCore.PostgreSQL": "10.0.0",
           "Simcag.AlertService.Application": "1.0.0",
           "Simcag.AlertService.Infrastructure": "1.0.0",
-          "Swashbuckle.AspNetCore": "10.1.7"
+          "Swashbuckle.AspNetCore": "10.1.7",
+          "System.Security.Permissions": "10.0.7"
         },
         "compile": {
           "bin/placeholder/Simcag.AlertService.Api.dll": {}
@@ -1627,7 +1647,9 @@
           "Microsoft.Extensions.Caching.Abstractions": "10.0.5",
           "Microsoft.Extensions.Hosting.Abstractions": "10.0.5",
           "Microsoft.Extensions.Logging.Abstractions": "10.0.5",
-          "Simcag.AlertService.Domain": "1.0.0"
+          "Simcag.AlertService.Domain": "1.0.0",
+          "System.Security.Cryptography.Xml": "10.0.7",
+          "System.Security.Permissions": "10.0.7"
         },
         "compile": {
           "bin/placeholder/Simcag.AlertService.Application.dll": {}
@@ -1641,7 +1663,9 @@
         "framework": ".NETCoreApp,Version=v10.0",
         "dependencies": {
           "Microsoft.Extensions.Logging.Abstractions": "10.0.5",
-          "Simcag.Shared": "1.0.0"
+          "Simcag.Shared": "1.0.0",
+          "System.Security.Cryptography.Xml": "10.0.7",
+          "System.Security.Permissions": "10.0.7"
         },
         "compile": {
           "bin/placeholder/Simcag.AlertService.Domain.dll": {}
@@ -1660,7 +1684,9 @@
           "Npgsql.EntityFrameworkCore.PostgreSQL": "10.0.0",
           "RabbitMQ.Client": "6.8.1",
           "Simcag.AlertService.Application": "1.0.0",
-          "Simcag.AlertService.Domain": "1.0.0"
+          "Simcag.AlertService.Domain": "1.0.0",
+          "System.Security.Cryptography.Xml": "10.0.7",
+          "System.Security.Permissions": "10.0.7"
         },
         "compile": {
           "bin/placeholder/Simcag.AlertService.Infrastructure.dll": {}
@@ -1673,12 +1699,17 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v10.0",
         "dependencies": {
+          "Microsoft.AspNetCore.Http.Abstractions": "2.3.0",
+          "Microsoft.EntityFrameworkCore": "10.0.0",
+          "Microsoft.EntityFrameworkCore.Relational": "10.0.0",
           "Microsoft.Extensions.Configuration": "10.0.5",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "10.0.5",
           "Microsoft.Extensions.Hosting.Abstractions": "10.0.5",
           "Microsoft.Extensions.Options": "10.0.5",
           "Microsoft.Extensions.Options.ConfigurationExtensions": "10.0.5",
-          "RabbitMQ.Client": "6.8.1"
+          "RabbitMQ.Client": "6.8.1",
+          "System.Security.Cryptography.Xml": "10.0.7",
+          "System.Security.Permissions": "10.0.7"
         },
         "compile": {
           "bin/placeholder/Simcag.Shared.dll": {}
@@ -1820,6 +1851,32 @@
         "lib/netstandard2.1/FluentAssertions.dll",
         "lib/netstandard2.1/FluentAssertions.pdb",
         "lib/netstandard2.1/FluentAssertions.xml"
+      ]
+    },
+    "Microsoft.AspNetCore.Http.Abstractions/2.3.0": {
+      "sha512": "39r9PPrjA6s0blyFv5qarckjNkaHRA5B+3b53ybuGGNTXEj1/DStQJ4NWjFL6QTRQpL9zt7nDyKxZdJOlcnq+Q==",
+      "type": "package",
+      "path": "microsoft.aspnetcore.http.abstractions/2.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netstandard2.0/Microsoft.AspNetCore.Http.Abstractions.dll",
+        "lib/netstandard2.0/Microsoft.AspNetCore.Http.Abstractions.xml",
+        "microsoft.aspnetcore.http.abstractions.2.3.0.nupkg.sha512",
+        "microsoft.aspnetcore.http.abstractions.nuspec"
+      ]
+    },
+    "Microsoft.AspNetCore.Http.Features/2.3.0": {
+      "sha512": "f10WUgcsKqrkmnz6gt8HeZ7kyKjYN30PO7cSic1lPtH7paPtnQqXPOveul/SIPI43PhRD4trttg4ywnrEmmJpA==",
+      "type": "package",
+      "path": "microsoft.aspnetcore.http.features/2.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netstandard2.0/Microsoft.AspNetCore.Http.Features.dll",
+        "lib/netstandard2.0/Microsoft.AspNetCore.Http.Features.xml",
+        "microsoft.aspnetcore.http.features.2.3.0.nupkg.sha512",
+        "microsoft.aspnetcore.http.features.nuspec"
       ]
     },
     "Microsoft.AspNetCore.Mvc.Testing/10.0.0": {
@@ -3498,35 +3555,6 @@
         "microsoft.testplatform.testhost.nuspec"
       ]
     },
-    "Microsoft.Win32.SystemEvents/6.0.0": {
-      "sha512": "hqTM5628jSsQiv+HGpiq3WKBl2c8v1KZfby2J6Pr7pEPlK9waPdgEO6b8A/+/xn/yZ9ulv8HuqK71ONy2tg67A==",
-      "type": "package",
-      "path": "microsoft.win32.systemevents/6.0.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "Icon.png",
-        "LICENSE.TXT",
-        "THIRD-PARTY-NOTICES.TXT",
-        "buildTransitive/netcoreapp2.0/Microsoft.Win32.SystemEvents.targets",
-        "buildTransitive/netcoreapp3.1/_._",
-        "lib/net461/Microsoft.Win32.SystemEvents.dll",
-        "lib/net461/Microsoft.Win32.SystemEvents.xml",
-        "lib/net6.0/Microsoft.Win32.SystemEvents.dll",
-        "lib/net6.0/Microsoft.Win32.SystemEvents.xml",
-        "lib/netcoreapp3.1/Microsoft.Win32.SystemEvents.dll",
-        "lib/netcoreapp3.1/Microsoft.Win32.SystemEvents.xml",
-        "lib/netstandard2.0/Microsoft.Win32.SystemEvents.dll",
-        "lib/netstandard2.0/Microsoft.Win32.SystemEvents.xml",
-        "microsoft.win32.systemevents.6.0.0.nupkg.sha512",
-        "microsoft.win32.systemevents.nuspec",
-        "runtimes/win/lib/net6.0/Microsoft.Win32.SystemEvents.dll",
-        "runtimes/win/lib/net6.0/Microsoft.Win32.SystemEvents.xml",
-        "runtimes/win/lib/netcoreapp3.1/Microsoft.Win32.SystemEvents.dll",
-        "runtimes/win/lib/netcoreapp3.1/Microsoft.Win32.SystemEvents.xml",
-        "useSharedDesignerContext.txt"
-      ]
-    },
     "Moq/4.20.72": {
       "sha512": "EA55cjyNn8eTNWrgrdZJH5QLFp2L43oxl1tlkoYUKIE9pRwL784OWiTXeCV5ApS+AMYEAlt7Fo03A2XfouvHmQ==",
       "type": "package",
@@ -3847,42 +3875,39 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "System.Drawing.Common/6.0.0": {
-      "sha512": "NfuoKUiP2nUWwKZN6twGqXioIe1zVD0RIj2t976A+czLHr2nY454RwwXs6JU9Htc6mwqL6Dn/nEL3dpVf2jOhg==",
+    "System.Security.Cryptography.Pkcs/10.0.7": {
+      "sha512": "dbdKfF3eA5l+CXiAbDxiCxdezoxeanbue1ck8m49ih1L9uZG6ry8Ul8On6vpragyMDJJP4rQHUY/SWgk66tCYA==",
       "type": "package",
-      "path": "system.drawing.common/6.0.0",
+      "path": "system.security.cryptography.pkcs/10.0.7",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Icon.png",
-        "LICENSE.TXT",
         "THIRD-PARTY-NOTICES.TXT",
-        "buildTransitive/netcoreapp2.0/System.Drawing.Common.targets",
-        "buildTransitive/netcoreapp3.1/_._",
-        "lib/MonoAndroid10/_._",
-        "lib/MonoTouch10/_._",
-        "lib/net461/System.Drawing.Common.dll",
-        "lib/net461/System.Drawing.Common.xml",
-        "lib/net6.0/System.Drawing.Common.dll",
-        "lib/net6.0/System.Drawing.Common.xml",
-        "lib/netcoreapp3.1/System.Drawing.Common.dll",
-        "lib/netcoreapp3.1/System.Drawing.Common.xml",
-        "lib/netstandard2.0/System.Drawing.Common.dll",
-        "lib/netstandard2.0/System.Drawing.Common.xml",
-        "lib/xamarinios10/_._",
-        "lib/xamarinmac20/_._",
-        "lib/xamarintvos10/_._",
-        "lib/xamarinwatchos10/_._",
-        "runtimes/unix/lib/net6.0/System.Drawing.Common.dll",
-        "runtimes/unix/lib/net6.0/System.Drawing.Common.xml",
-        "runtimes/unix/lib/netcoreapp3.1/System.Drawing.Common.dll",
-        "runtimes/unix/lib/netcoreapp3.1/System.Drawing.Common.xml",
-        "runtimes/win/lib/net6.0/System.Drawing.Common.dll",
-        "runtimes/win/lib/net6.0/System.Drawing.Common.xml",
-        "runtimes/win/lib/netcoreapp3.1/System.Drawing.Common.dll",
-        "runtimes/win/lib/netcoreapp3.1/System.Drawing.Common.xml",
-        "system.drawing.common.6.0.0.nupkg.sha512",
-        "system.drawing.common.nuspec",
+        "buildTransitive/net461/System.Security.Cryptography.Pkcs.targets",
+        "buildTransitive/net462/_._",
+        "buildTransitive/net8.0/_._",
+        "buildTransitive/netcoreapp2.0/System.Security.Cryptography.Pkcs.targets",
+        "lib/net10.0/System.Security.Cryptography.Pkcs.dll",
+        "lib/net10.0/System.Security.Cryptography.Pkcs.xml",
+        "lib/net462/System.Security.Cryptography.Pkcs.dll",
+        "lib/net462/System.Security.Cryptography.Pkcs.xml",
+        "lib/net8.0/System.Security.Cryptography.Pkcs.dll",
+        "lib/net8.0/System.Security.Cryptography.Pkcs.xml",
+        "lib/net9.0/System.Security.Cryptography.Pkcs.dll",
+        "lib/net9.0/System.Security.Cryptography.Pkcs.xml",
+        "lib/netstandard2.0/System.Security.Cryptography.Pkcs.dll",
+        "lib/netstandard2.0/System.Security.Cryptography.Pkcs.xml",
+        "lib/netstandard2.1/System.Security.Cryptography.Pkcs.dll",
+        "lib/netstandard2.1/System.Security.Cryptography.Pkcs.xml",
+        "runtimes/win/lib/net10.0/System.Security.Cryptography.Pkcs.dll",
+        "runtimes/win/lib/net10.0/System.Security.Cryptography.Pkcs.xml",
+        "runtimes/win/lib/net8.0/System.Security.Cryptography.Pkcs.dll",
+        "runtimes/win/lib/net8.0/System.Security.Cryptography.Pkcs.xml",
+        "runtimes/win/lib/net9.0/System.Security.Cryptography.Pkcs.dll",
+        "runtimes/win/lib/net9.0/System.Security.Cryptography.Pkcs.xml",
+        "system.security.cryptography.pkcs.10.0.7.nupkg.sha512",
+        "system.security.cryptography.pkcs.nuspec",
         "useSharedDesignerContext.txt"
       ]
     },
@@ -3921,54 +3946,85 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "System.Security.Permissions/6.0.0": {
-      "sha512": "T/uuc7AklkDoxmcJ7LGkyX1CcSviZuLCa4jg3PekfJ7SU0niF0IVTXwUiNVP9DSpzou2PpxJ+eNY2IfDM90ZCg==",
+    "System.Security.Cryptography.Xml/10.0.7": {
+      "sha512": "wG/+ospsC2oR6j7INYh2V5/CWR6Cpt1Zjkxbo0lfovoi/2RpIcGZPVXOPBNVrI5fmrrji0mdNgez+FClDsIuYA==",
       "type": "package",
-      "path": "system.security.permissions/6.0.0",
+      "path": "system.security.cryptography.xml/10.0.7",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Icon.png",
-        "LICENSE.TXT",
         "THIRD-PARTY-NOTICES.TXT",
+        "buildTransitive/net461/System.Security.Cryptography.Xml.targets",
+        "buildTransitive/net462/_._",
+        "buildTransitive/net8.0/_._",
+        "buildTransitive/netcoreapp2.0/System.Security.Cryptography.Xml.targets",
+        "lib/net10.0/System.Security.Cryptography.Xml.dll",
+        "lib/net10.0/System.Security.Cryptography.Xml.xml",
+        "lib/net462/System.Security.Cryptography.Xml.dll",
+        "lib/net462/System.Security.Cryptography.Xml.xml",
+        "lib/net8.0/System.Security.Cryptography.Xml.dll",
+        "lib/net8.0/System.Security.Cryptography.Xml.xml",
+        "lib/net9.0/System.Security.Cryptography.Xml.dll",
+        "lib/net9.0/System.Security.Cryptography.Xml.xml",
+        "lib/netstandard2.0/System.Security.Cryptography.Xml.dll",
+        "lib/netstandard2.0/System.Security.Cryptography.Xml.xml",
+        "system.security.cryptography.xml.10.0.7.nupkg.sha512",
+        "system.security.cryptography.xml.nuspec",
+        "useSharedDesignerContext.txt"
+      ]
+    },
+    "System.Security.Permissions/10.0.7": {
+      "sha512": "+yehHzef1s1p+3zBAsXhuYq7aJUOuILH3ixs25Lt/qQd0gm4fXkyS1Rbh545X9aiymtzAY0eIUXIGBxdx8YMEw==",
+      "type": "package",
+      "path": "system.security.permissions/10.0.7",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "THIRD-PARTY-NOTICES.TXT",
+        "buildTransitive/net461/System.Security.Permissions.targets",
+        "buildTransitive/net462/_._",
+        "buildTransitive/net8.0/_._",
         "buildTransitive/netcoreapp2.0/System.Security.Permissions.targets",
-        "buildTransitive/netcoreapp3.1/_._",
-        "lib/net461/System.Security.Permissions.dll",
-        "lib/net461/System.Security.Permissions.xml",
-        "lib/net5.0/System.Security.Permissions.dll",
-        "lib/net5.0/System.Security.Permissions.xml",
-        "lib/net6.0/System.Security.Permissions.dll",
-        "lib/net6.0/System.Security.Permissions.xml",
-        "lib/netcoreapp3.1/System.Security.Permissions.dll",
-        "lib/netcoreapp3.1/System.Security.Permissions.xml",
+        "lib/net10.0/System.Security.Permissions.dll",
+        "lib/net10.0/System.Security.Permissions.xml",
+        "lib/net462/System.Security.Permissions.dll",
+        "lib/net462/System.Security.Permissions.xml",
+        "lib/net8.0/System.Security.Permissions.dll",
+        "lib/net8.0/System.Security.Permissions.xml",
+        "lib/net9.0/System.Security.Permissions.dll",
+        "lib/net9.0/System.Security.Permissions.xml",
         "lib/netstandard2.0/System.Security.Permissions.dll",
         "lib/netstandard2.0/System.Security.Permissions.xml",
-        "runtimes/win/lib/net461/System.Security.Permissions.dll",
-        "runtimes/win/lib/net461/System.Security.Permissions.xml",
-        "system.security.permissions.6.0.0.nupkg.sha512",
+        "system.security.permissions.10.0.7.nupkg.sha512",
         "system.security.permissions.nuspec",
         "useSharedDesignerContext.txt"
       ]
     },
-    "System.Windows.Extensions/6.0.0": {
-      "sha512": "IXoJOXIqc39AIe+CIR7koBtRGMiCt/LPM3lI+PELtDIy9XdyeSrwXFdWV9dzJ2Awl0paLWUaknLxFQ5HpHZUog==",
+    "System.Windows.Extensions/10.0.7": {
+      "sha512": "wwNLoAEIqNcJUakjNHQnyvbmSmMjXsSblw5L97VfS3bXqit+D9LUFb9eFN165DdxOk8pw5zk90OmmvyMdgWvhg==",
       "type": "package",
-      "path": "system.windows.extensions/6.0.0",
+      "path": "system.windows.extensions/10.0.7",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Icon.png",
-        "LICENSE.TXT",
+        "PACKAGE.md",
         "THIRD-PARTY-NOTICES.TXT",
-        "lib/net6.0/System.Windows.Extensions.dll",
-        "lib/net6.0/System.Windows.Extensions.xml",
-        "lib/netcoreapp3.1/System.Windows.Extensions.dll",
-        "lib/netcoreapp3.1/System.Windows.Extensions.xml",
-        "runtimes/win/lib/net6.0/System.Windows.Extensions.dll",
-        "runtimes/win/lib/net6.0/System.Windows.Extensions.xml",
-        "runtimes/win/lib/netcoreapp3.1/System.Windows.Extensions.dll",
-        "runtimes/win/lib/netcoreapp3.1/System.Windows.Extensions.xml",
-        "system.windows.extensions.6.0.0.nupkg.sha512",
+        "lib/net10.0/System.Windows.Extensions.dll",
+        "lib/net10.0/System.Windows.Extensions.xml",
+        "lib/net8.0/System.Windows.Extensions.dll",
+        "lib/net8.0/System.Windows.Extensions.xml",
+        "lib/net9.0/System.Windows.Extensions.dll",
+        "lib/net9.0/System.Windows.Extensions.xml",
+        "runtimes/win/lib/net10.0/System.Windows.Extensions.dll",
+        "runtimes/win/lib/net10.0/System.Windows.Extensions.xml",
+        "runtimes/win/lib/net8.0/System.Windows.Extensions.dll",
+        "runtimes/win/lib/net8.0/System.Windows.Extensions.xml",
+        "runtimes/win/lib/net9.0/System.Windows.Extensions.dll",
+        "runtimes/win/lib/net9.0/System.Windows.Extensions.xml",
+        "system.windows.extensions.10.0.7.nupkg.sha512",
         "system.windows.extensions.nuspec",
         "useSharedDesignerContext.txt"
       ]
@@ -4150,6 +4206,8 @@
       "Simcag.AlertService.Application >= 1.0.0",
       "Simcag.AlertService.Domain >= 1.0.0",
       "Simcag.AlertService.Infrastructure >= 1.0.0",
+      "System.Security.Cryptography.Xml >= 10.0.7",
+      "System.Security.Permissions >= 10.0.7",
       "coverlet.collector >= 6.0.2",
       "xunit >= 2.9.2",
       "xunit.runner.visualstudio >= 3.0.0"
@@ -4162,11 +4220,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Tests\\Simcag.AlertService.Tests.csproj",
+      "projectUniqueName": "f:\\p\\simcag\\alert-service\\Simcag.AlertService.Tests\\Simcag.AlertService.Tests.csproj",
       "projectName": "Simcag.AlertService.Tests",
-      "projectPath": "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Tests\\Simcag.AlertService.Tests.csproj",
+      "projectPath": "f:\\p\\simcag\\alert-service\\Simcag.AlertService.Tests\\Simcag.AlertService.Tests.csproj",
       "packagesPath": "C:\\Users\\Shelow\\.nuget\\packages\\",
-      "outputPath": "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Tests\\obj\\",
+      "outputPath": "f:\\p\\simcag\\alert-service\\Simcag.AlertService.Tests\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "F:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -4189,22 +4247,25 @@
         "net10.0": {
           "targetAlias": "net10.0",
           "projectReferences": {
-            "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Api\\Simcag.AlertService.Api.csproj": {
-              "projectPath": "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Api\\Simcag.AlertService.Api.csproj"
+            "f:\\p\\simcag\\alert-service\\Simcag.AlertService.Api\\Simcag.AlertService.Api.csproj": {
+              "projectPath": "f:\\p\\simcag\\alert-service\\Simcag.AlertService.Api\\Simcag.AlertService.Api.csproj"
             },
-            "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Application\\Simcag.AlertService.Application.csproj": {
-              "projectPath": "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Application\\Simcag.AlertService.Application.csproj"
+            "f:\\p\\simcag\\alert-service\\Simcag.AlertService.Application\\Simcag.AlertService.Application.csproj": {
+              "projectPath": "f:\\p\\simcag\\alert-service\\Simcag.AlertService.Application\\Simcag.AlertService.Application.csproj"
             },
-            "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Domain\\Simcag.AlertService.Domain.csproj": {
-              "projectPath": "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Domain\\Simcag.AlertService.Domain.csproj"
+            "f:\\p\\simcag\\alert-service\\Simcag.AlertService.Domain\\Simcag.AlertService.Domain.csproj": {
+              "projectPath": "f:\\p\\simcag\\alert-service\\Simcag.AlertService.Domain\\Simcag.AlertService.Domain.csproj"
             },
-            "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Infrastructure\\Simcag.AlertService.Infrastructure.csproj": {
-              "projectPath": "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Infrastructure\\Simcag.AlertService.Infrastructure.csproj"
+            "f:\\p\\simcag\\alert-service\\Simcag.AlertService.Infrastructure\\Simcag.AlertService.Infrastructure.csproj": {
+              "projectPath": "f:\\p\\simcag\\alert-service\\Simcag.AlertService.Infrastructure\\Simcag.AlertService.Infrastructure.csproj"
             }
           }
         }
       },
       "warningProperties": {
+        "noWarn": [
+          "NU1510"
+        ],
         "warnAsError": [
           "NU1605"
         ]
@@ -4239,6 +4300,14 @@
           "Moq": {
             "target": "Package",
             "version": "[4.20.72, )"
+          },
+          "System.Security.Cryptography.Xml": {
+            "target": "Package",
+            "version": "[10.0.7, )"
+          },
+          "System.Security.Permissions": {
+            "target": "Package",
+            "version": "[10.0.7, )"
           },
           "coverlet.collector": {
             "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",

@@ -1,23 +1,36 @@
 {
   "version": 2,
-  "dgSpecHash": "J0tSy+H3Q20=",
+  "dgSpecHash": "e4uaUtX2fd8=",
   "success": true,
   "projectFilePath": "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Application\\Simcag.AlertService.Application.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Shelow\\.nuget\\packages\\microsoft.aspnetcore.http.abstractions\\2.3.0\\microsoft.aspnetcore.http.abstractions.2.3.0.nupkg.sha512",
+    "C:\\Users\\Shelow\\.nuget\\packages\\microsoft.aspnetcore.http.features\\2.3.0\\microsoft.aspnetcore.http.features.2.3.0.nupkg.sha512",
+    "C:\\Users\\Shelow\\.nuget\\packages\\microsoft.entityframeworkcore\\10.0.0\\microsoft.entityframeworkcore.10.0.0.nupkg.sha512",
+    "C:\\Users\\Shelow\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\10.0.0\\microsoft.entityframeworkcore.abstractions.10.0.0.nupkg.sha512",
+    "C:\\Users\\Shelow\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\10.0.0\\microsoft.entityframeworkcore.analyzers.10.0.0.nupkg.sha512",
+    "C:\\Users\\Shelow\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\10.0.0\\microsoft.entityframeworkcore.relational.10.0.0.nupkg.sha512",
     "C:\\Users\\Shelow\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\10.0.5\\microsoft.extensions.caching.abstractions.10.0.5.nupkg.sha512",
+    "C:\\Users\\Shelow\\.nuget\\packages\\microsoft.extensions.caching.memory\\10.0.0\\microsoft.extensions.caching.memory.10.0.0.nupkg.sha512",
     "C:\\Users\\Shelow\\.nuget\\packages\\microsoft.extensions.configuration\\10.0.5\\microsoft.extensions.configuration.10.0.5.nupkg.sha512",
     "C:\\Users\\Shelow\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\10.0.5\\microsoft.extensions.configuration.abstractions.10.0.5.nupkg.sha512",
     "C:\\Users\\Shelow\\.nuget\\packages\\microsoft.extensions.configuration.binder\\10.0.5\\microsoft.extensions.configuration.binder.10.0.5.nupkg.sha512",
+    "C:\\Users\\Shelow\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\10.0.0\\microsoft.extensions.dependencyinjection.10.0.0.nupkg.sha512",
     "C:\\Users\\Shelow\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\10.0.5\\microsoft.extensions.dependencyinjection.abstractions.10.0.5.nupkg.sha512",
     "C:\\Users\\Shelow\\.nuget\\packages\\microsoft.extensions.diagnostics.abstractions\\10.0.5\\microsoft.extensions.diagnostics.abstractions.10.0.5.nupkg.sha512",
     "C:\\Users\\Shelow\\.nuget\\packages\\microsoft.extensions.fileproviders.abstractions\\10.0.5\\microsoft.extensions.fileproviders.abstractions.10.0.5.nupkg.sha512",
     "C:\\Users\\Shelow\\.nuget\\packages\\microsoft.extensions.hosting.abstractions\\10.0.5\\microsoft.extensions.hosting.abstractions.10.0.5.nupkg.sha512",
+    "C:\\Users\\Shelow\\.nuget\\packages\\microsoft.extensions.logging\\10.0.0\\microsoft.extensions.logging.10.0.0.nupkg.sha512",
     "C:\\Users\\Shelow\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\10.0.5\\microsoft.extensions.logging.abstractions.10.0.5.nupkg.sha512",
     "C:\\Users\\Shelow\\.nuget\\packages\\microsoft.extensions.options\\10.0.5\\microsoft.extensions.options.10.0.5.nupkg.sha512",
     "C:\\Users\\Shelow\\.nuget\\packages\\microsoft.extensions.options.configurationextensions\\10.0.5\\microsoft.extensions.options.configurationextensions.10.0.5.nupkg.sha512",
     "C:\\Users\\Shelow\\.nuget\\packages\\microsoft.extensions.primitives\\10.0.5\\microsoft.extensions.primitives.10.0.5.nupkg.sha512",
     "C:\\Users\\Shelow\\.nuget\\packages\\rabbitmq.client\\6.8.1\\rabbitmq.client.6.8.1.nupkg.sha512",
-    "C:\\Users\\Shelow\\.nuget\\packages\\simcag.shared\\1.0.0\\simcag.shared.1.0.0.nupkg.sha512"
+    "C:\\Users\\Shelow\\.nuget\\packages\\simcag.shared\\1.0.1\\simcag.shared.1.0.1.nupkg.sha512",
+    "C:\\Users\\Shelow\\.nuget\\packages\\system.security.cryptography.pkcs\\10.0.7\\system.security.cryptography.pkcs.10.0.7.nupkg.sha512",
+    "C:\\Users\\Shelow\\.nuget\\packages\\system.security.cryptography.xml\\10.0.7\\system.security.cryptography.xml.10.0.7.nupkg.sha512",
+    "C:\\Users\\Shelow\\.nuget\\packages\\system.security.permissions\\10.0.7\\system.security.permissions.10.0.7.nupkg.sha512",
+    "C:\\Users\\Shelow\\.nuget\\packages\\system.windows.extensions\\10.0.7\\system.windows.extensions.10.0.7.nupkg.sha512"
   ],
   "logs": []
 }

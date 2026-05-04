@@ -1,10 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "Sleph8O6F0A=",
+  "dgSpecHash": "n8Oy+NYBiBI=",
   "success": true,
   "projectFilePath": "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Infrastructure\\Simcag.AlertService.Infrastructure.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Shelow\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
+    "C:\\Users\\Shelow\\.nuget\\packages\\microsoft.aspnetcore.http.abstractions\\2.3.0\\microsoft.aspnetcore.http.abstractions.2.3.0.nupkg.sha512",
+    "C:\\Users\\Shelow\\.nuget\\packages\\microsoft.aspnetcore.http.features\\2.3.0\\microsoft.aspnetcore.http.features.2.3.0.nupkg.sha512",
     "C:\\Users\\Shelow\\.nuget\\packages\\microsoft.build\\17.7.2\\microsoft.build.17.7.2.nupkg.sha512",
     "C:\\Users\\Shelow\\.nuget\\packages\\microsoft.build.framework\\17.14.28\\microsoft.build.framework.17.14.28.nupkg.sha512",
     "C:\\Users\\Shelow\\.nuget\\packages\\microsoft.build.tasks.core\\17.14.28\\microsoft.build.tasks.core.17.14.28.nupkg.sha512",
@@ -44,6 +46,7 @@
     "C:\\Users\\Shelow\\.nuget\\packages\\npgsql.entityframeworkcore.postgresql\\10.0.0\\npgsql.entityframeworkcore.postgresql.10.0.0.nupkg.sha512",
     "C:\\Users\\Shelow\\.nuget\\packages\\pipelines.sockets.unofficial\\2.2.8\\pipelines.sockets.unofficial.2.2.8.nupkg.sha512",
     "C:\\Users\\Shelow\\.nuget\\packages\\rabbitmq.client\\6.8.1\\rabbitmq.client.6.8.1.nupkg.sha512",
+    "C:\\Users\\Shelow\\.nuget\\packages\\simcag.shared\\1.0.1\\simcag.shared.1.0.1.nupkg.sha512",
     "C:\\Users\\Shelow\\.nuget\\packages\\stackexchange.redis\\2.7.27\\stackexchange.redis.2.7.27.nupkg.sha512",
     "C:\\Users\\Shelow\\.nuget\\packages\\system.codedom\\9.0.0\\system.codedom.9.0.0.nupkg.sha512",
     "C:\\Users\\Shelow\\.nuget\\packages\\system.composition\\9.0.0\\system.composition.9.0.0.nupkg.sha512",
@@ -57,37 +60,11 @@
     "C:\\Users\\Shelow\\.nuget\\packages\\system.formats.nrbf\\9.0.0\\system.formats.nrbf.9.0.0.nupkg.sha512",
     "C:\\Users\\Shelow\\.nuget\\packages\\system.reflection.metadataloadcontext\\7.0.0\\system.reflection.metadataloadcontext.7.0.0.nupkg.sha512",
     "C:\\Users\\Shelow\\.nuget\\packages\\system.resources.extensions\\9.0.0\\system.resources.extensions.9.0.0.nupkg.sha512",
-    "C:\\Users\\Shelow\\.nuget\\packages\\system.security.cryptography.pkcs\\9.0.0\\system.security.cryptography.pkcs.9.0.0.nupkg.sha512",
+    "C:\\Users\\Shelow\\.nuget\\packages\\system.security.cryptography.pkcs\\10.0.7\\system.security.cryptography.pkcs.10.0.7.nupkg.sha512",
     "C:\\Users\\Shelow\\.nuget\\packages\\system.security.cryptography.protecteddata\\9.0.0\\system.security.cryptography.protecteddata.9.0.0.nupkg.sha512",
-    "C:\\Users\\Shelow\\.nuget\\packages\\system.security.cryptography.xml\\9.0.0\\system.security.cryptography.xml.9.0.0.nupkg.sha512",
-    "C:\\Users\\Shelow\\.nuget\\packages\\system.security.permissions\\9.0.0\\system.security.permissions.9.0.0.nupkg.sha512",
-    "C:\\Users\\Shelow\\.nuget\\packages\\system.windows.extensions\\9.0.0\\system.windows.extensions.9.0.0.nupkg.sha512",
-    "C:\\Users\\Shelow\\.nuget\\packages\\simcag.shared\\1.0.0\\simcag.shared.1.0.0.nupkg.sha512"
+    "C:\\Users\\Shelow\\.nuget\\packages\\system.security.cryptography.xml\\10.0.7\\system.security.cryptography.xml.10.0.7.nupkg.sha512",
+    "C:\\Users\\Shelow\\.nuget\\packages\\system.security.permissions\\10.0.7\\system.security.permissions.10.0.7.nupkg.sha512",
+    "C:\\Users\\Shelow\\.nuget\\packages\\system.windows.extensions\\10.0.7\\system.windows.extensions.10.0.7.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "NU1903",
-      "level": "Warning",
-      "message": "Package 'System.Security.Cryptography.Xml' 9.0.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-37gx-xxp4-5rgx",
-      "projectPath": "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Infrastructure\\Simcag.AlertService.Infrastructure.csproj",
-      "warningLevel": 1,
-      "filePath": "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Infrastructure\\Simcag.AlertService.Infrastructure.csproj",
-      "libraryId": "System.Security.Cryptography.Xml",
-      "targetGraphs": [
-        "net10.0"
-      ]
-    },
-    {
-      "code": "NU1903",
-      "level": "Warning",
-      "message": "Package 'System.Security.Cryptography.Xml' 9.0.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-w3x6-4m5h-cxqf",
-      "projectPath": "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Infrastructure\\Simcag.AlertService.Infrastructure.csproj",
-      "warningLevel": 1,
-      "filePath": "F:\\p\\simcag\\alert-service\\Simcag.AlertService.Infrastructure\\Simcag.AlertService.Infrastructure.csproj",
-      "libraryId": "System.Security.Cryptography.Xml",
-      "targetGraphs": [
-        "net10.0"
-      ]
-    }
-  ]
+  "logs": []
 }
