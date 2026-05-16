@@ -93,8 +93,16 @@ public class AlertsController : ControllerBase
         {
             Id = alert.Id,
             ProductId = alert.ProductId,
+            ProductName = alert.ProductName,
+            Category = alert.Category,
+            AlertCategory = alert.AlertCategory,
             Type = alert.Type,
             Message = alert.Message,
+            Severity = alert.Severity.ToString(),
+            DeviationPercentage = alert.DeviationPercentage,
+            CurrentPrice = alert.CurrentPrice,
+            AveragePrice = alert.AveragePrice,
+            AnalyzedAt = alert.AnalyzedAt,
             CreatedAt = alert.CreatedAt,
             Resolved = alert.Resolved
         };

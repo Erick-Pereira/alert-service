@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using Simcag.AlertService.Application.Interfaces;
 using Simcag.Shared.Events;
 using Simcag.Shared.Messaging.Contracts;
+using Simcag.Shared.Messaging.Telemetry;
 
 namespace Simcag.AlertService.Application.Workers;
 
@@ -36,6 +37,8 @@ public sealed class PriceAnalysisAlertWorker : BackgroundService
         {
             await foreach (var envelope in _consumer.ReadMessagesAsync(stoppingToken))
             {
+                using (MessagingConsumeTelemetry.BeginConsume(envelope, out _))
+                {
                 using var scope = _scopeFactory.CreateScope();
                 var alertService = scope.ServiceProvider.GetRequiredService<IAlertService>();
 
@@ -54,6 +57,7 @@ public sealed class PriceAnalysisAlertWorker : BackgroundService
                         envelope.Data.ProductId,
                         envelope.Data.EventId);
                     await _consumer.RejectMessageAsync(envelope, stoppingToken);
+                }
                 }
             }
         }

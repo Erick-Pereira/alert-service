@@ -19,11 +19,13 @@ using Microsoft.Extensions.Caching.StackExchangeRedis;
 using Microsoft.Extensions.DependencyInjection;
 using DotNetEnv;
 using Simcag.Shared.Hosting;
+using Simcag.Shared.Telemetry;
 
 DotNetEnv.Env.NoClobber().Load();
 ContainerListenConfiguration.NormalizeAspNetCoreListenUrlsInContainer();
 var builder = WebApplication.CreateBuilder(args);
 ContainerListenConfiguration.ApplyDockerListenUrls(builder);
+builder.AddSimcagDistributedTelemetry("Simcag.AlertService");
 
 static string? GetEnv(params string[] keys)
 {
@@ -83,6 +85,7 @@ if (!builder.Environment.IsEnvironment("Testing"))
         Password = GetEnv("RABBITMQ__PASSWORD", "RABBITMQ_PASSWORD") ?? "guest",
         VirtualHost = GetEnv("RABBITMQ__VIRTUALHOST", "RABBITMQ_VIRTUALHOST") ?? "/"
     };
+    rabbitMqOptions.ApplyMessageSigningFromEnvironment();
 
     builder.Services.AddSingleton(rabbitMqOptions);
     builder.Services.AddRabbitMqMessaging(rabbitMqOptions);
@@ -114,7 +117,12 @@ builder.Services.AddScoped<IAlertRuleService, AlertClassificationService>();
 builder.Services.AddScoped<IAlertService, EvaluateAlertHandler>();
 
 // Controllers & API
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(o =>
+    {
+        o.JsonSerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase;
+        o.JsonSerializerOptions.DictionaryKeyPolicy = System.Text.Json.JsonNamingPolicy.CamelCase;
+    });
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -139,6 +147,8 @@ builder.Services.AddHealthChecks();
 
 var app = builder.Build();
 
+app.UseSimcagHttpCorrelationActivityTags();
+
 if (app.Environment.IsDevelopment() && !EfMigrationsOptOut())
 {
     using (var scope = app.Services.CreateScope())
@@ -159,6 +169,8 @@ if (!app.Environment.IsEnvironment("Testing"))
 app.UseAuthorization();
 app.MapControllers();
 app.MapHealthChecks("/health");
+
+app.UseSimcagTelemetryEndpoints();
 
 app.Run();
 
