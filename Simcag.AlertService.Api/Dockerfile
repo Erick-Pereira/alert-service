@@ -1,6 +1,6 @@
 # Multi-stage — contexto: pasta alert-service (monorepo) ou repo standalone.
 
-FROM mcr.microsoft.com/dotnet/sdk:10.0 AS builder
+FROM mcr.microsoft.com/dotnet/sdk:10.0-bookworm-slim AS builder
 
 WORKDIR /src
 
@@ -34,7 +34,7 @@ RUN dotnet publish "Simcag.AlertService.Api/Simcag.AlertService.Api.csproj" \
     --no-restore \
     /p:UseAppHost=false
 
-FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS runtime
+FROM mcr.microsoft.com/dotnet/aspnet:10.0-bookworm-slim AS runtime
 
 WORKDIR /app
 
