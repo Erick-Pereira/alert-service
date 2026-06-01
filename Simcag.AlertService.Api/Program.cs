@@ -18,7 +18,9 @@ using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.StackExchangeRedis;
 using Microsoft.Extensions.DependencyInjection;
 using DotNetEnv;
+using Simcag.Shared.ErrorHandling;
 using Simcag.Shared.Hosting;
+using Simcag.Shared.Security;
 using Simcag.Shared.Telemetry;
 
 DotNetEnv.Env.NoClobber().Load();
@@ -26,6 +28,8 @@ ContainerListenConfiguration.NormalizeAspNetCoreListenUrlsInContainer();
 var builder = WebApplication.CreateBuilder(args);
 ContainerListenConfiguration.ApplyDockerListenUrls(builder);
 builder.AddSimcagDistributedTelemetry("Simcag.AlertService");
+
+var isTesting = builder.Environment.IsEnvironment("Testing");
 
 static string? GetEnv(params string[] keys)
 {
@@ -46,7 +50,7 @@ static bool EfMigrationsOptOut() =>
         || s.Equals("on", StringComparison.OrdinalIgnoreCase));
 
 // Database (.env: ConnectionStrings__DefaultConnection; sem appsettings para secretos)
-if (builder.Environment.IsEnvironment("Testing"))
+if (isTesting)
 {
     builder.Services.AddDbContext<AlertDbContext>(options =>
         options.UseInMemoryDatabase("alert_testing"));
@@ -75,7 +79,7 @@ else
 }
 
 // RabbitMQ (omitted in the Testing host so WebApplicationFactory does not require a broker)
-if (!builder.Environment.IsEnvironment("Testing"))
+if (!isTesting)
 {
     var rabbitMqOptions = new RabbitMqOptions
     {
@@ -143,10 +147,27 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 // Health Checks
-builder.Services.AddHealthChecks();
+var healthChecks = builder.Services.AddHealthChecks().AddSimcagLiveSelfCheck();
+if (isTesting)
+{
+    healthChecks.AddCheck("database", () => Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckResult.Healthy(), tags: [SimcagHealthCheckExtensions.ReadyTag]);
+}
+else
+{
+    var alertConnection = GetEnv("ConnectionStrings__DefaultConnection", "CONNECTIONSTRINGS__DEFAULTCONNECTION")
+        ?? throw new InvalidOperationException("Defina ConnectionStrings__DefaultConnection no .env (PostgreSQL).");
+    healthChecks.AddNpgSql(alertConnection, name: "PostgreSQL", tags: [SimcagHealthCheckExtensions.ReadyTag]);
+}
+
+builder.Services.AddSimcagGatewayAuthentication(builder.Environment);
+
+builder.Services.AddSimcagProblemDetails();
 
 var app = builder.Build();
 
+app.ValidateSimcagGatewayTrustAtStartup();
+
+app.UseSimcagExceptionHandler();
 app.UseSimcagHttpCorrelationActivityTags();
 
 if (app.Environment.IsDevelopment() && !EfMigrationsOptOut())
@@ -164,11 +185,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-if (!app.Environment.IsEnvironment("Testing"))
+if (!isTesting)
     app.UseHttpsRedirection();
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
-app.MapHealthChecks("/health");
+app.MapSimcagHealthChecks();
 
 app.UseSimcagTelemetryEndpoints();
 
