@@ -5,22 +5,23 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Simcag.AlertService.Application.Interfaces;
 using Simcag.Shared.Events;
+using Simcag.Shared.Messaging;
 using Simcag.Shared.Messaging.Contracts;
 using Simcag.Shared.Messaging.Telemetry;
 
 namespace Simcag.AlertService.Application.Workers;
 
 /// <summary>
-/// Consome <see cref="PriceAnalysisCompletedEvent"/> (fila <c>price-analysis-events</c>) e executa o motor de regras de alerta.
+/// Consome <see cref="PriceAnalyzedEvent"/> (fila dedicada <c>alert-price-analyzed-events</c>) e executa o motor de regras de alerta.
 /// </summary>
 public sealed class PriceAnalysisAlertWorker : BackgroundService
 {
-    private readonly IEventConsumer<PriceAnalysisCompletedEvent> _consumer;
+    private readonly IEventConsumer<PriceAnalyzedEvent> _consumer;
     private readonly IServiceScopeFactory _scopeFactory;
     private readonly ILogger<PriceAnalysisAlertWorker> _logger;
 
     public PriceAnalysisAlertWorker(
-        IEventConsumer<PriceAnalysisCompletedEvent> consumer,
+        IEventConsumer<PriceAnalyzedEvent> consumer,
         IServiceScopeFactory scopeFactory,
         ILogger<PriceAnalysisAlertWorker> logger)
     {
@@ -31,7 +32,7 @@ public sealed class PriceAnalysisAlertWorker : BackgroundService
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        _logger.LogInformation("PriceAnalysisAlertWorker: listening for {Event}", nameof(PriceAnalysisCompletedEvent));
+        _logger.LogInformation("PriceAnalysisAlertWorker: listening for {Event} on {Queue}", nameof(PriceAnalyzedEvent), EventNames.AlertPriceAnalyzed);
 
         try
         {
@@ -39,25 +40,25 @@ public sealed class PriceAnalysisAlertWorker : BackgroundService
             {
                 using (MessagingConsumeTelemetry.BeginConsume(envelope, out _))
                 {
-                using var scope = _scopeFactory.CreateScope();
-                var alertService = scope.ServiceProvider.GetRequiredService<IAlertService>();
+                    using var scope = _scopeFactory.CreateScope();
+                    var alertService = scope.ServiceProvider.GetRequiredService<IAlertService>();
 
-                try
-                {
-                    var analysis = envelope.Data;
-                    _logger.LogDebug("Evaluating alert rules for product {ProductId}", analysis.ProductId);
-                    await alertService.EvaluateAlertAsync(analysis, stoppingToken);
-                    await _consumer.AcknowledgeMessageAsync(envelope, stoppingToken);
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(
-                        ex,
-                        "Failed to evaluate alert for product {ProductId} (EventId {EventId})",
-                        envelope.Data.ProductId,
-                        envelope.Data.EventId);
-                    await _consumer.RejectMessageAsync(envelope, stoppingToken);
-                }
+                    try
+                    {
+                        var analysis = envelope.Data;
+                        _logger.LogDebug("Evaluating alert rules for product {ProductId}", analysis.ProductId);
+                        await alertService.EvaluateAlertAsync(analysis, stoppingToken);
+                        await _consumer.AcknowledgeMessageAsync(envelope, stoppingToken);
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogError(
+                            ex,
+                            "Failed to evaluate alert for product {ProductId} (EventId {EventId})",
+                            envelope.Data.ProductId,
+                            envelope.Data.EventId);
+                        await _consumer.RejectMessageAsync(envelope, stoppingToken);
+                    }
                 }
             }
         }

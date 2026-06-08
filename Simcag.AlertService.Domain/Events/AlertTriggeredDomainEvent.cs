@@ -24,6 +24,8 @@ public sealed class AlertTriggeredDomainEvent : BaseEvent
     public decimal AveragePrice { get; }
     public DateTime OccurredAt { get; }
     public string? Source { get; }
+    public Guid? NotifyUserId { get; }
+    public Guid? TenantId { get; }
 
     public AlertTriggeredDomainEvent(
         Guid alertId,
@@ -39,7 +41,9 @@ public sealed class AlertTriggeredDomainEvent : BaseEvent
         decimal currentPrice,
         decimal averagePrice,
         DateTime occurredAt,
-        string? source = null)
+        string? source = null,
+        Guid? notifyUserId = null,
+        Guid? tenantId = null)
     {
         AlertId = alertId;
         ProductId = productId;
@@ -55,5 +59,7 @@ public sealed class AlertTriggeredDomainEvent : BaseEvent
         AveragePrice = averagePrice;
         OccurredAt = occurredAt;
         Source = source ?? "AlertEvaluationService";
+        NotifyUserId = notifyUserId is { } u && u != Guid.Empty ? u : null;
+        TenantId = tenantId is { } t && t != Guid.Empty ? t : null;
     }
 }

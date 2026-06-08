@@ -51,7 +51,7 @@ public sealed class EvaluateAlertHandler : IAlertService
     }
 
     public async Task<Alert?> EvaluateAlertAsync(
-        PriceAnalysisCompletedEvent analysisEvent,
+        PriceAnalyzedEvent analysisEvent,
         CancellationToken ct)
     {
         using var scope = _logger.BeginScope(
@@ -116,6 +116,13 @@ public sealed class EvaluateAlertHandler : IAlertService
                     ct);
 
                 // 4. Publicar evento
+                Guid? tenantId = null;
+                if (!string.IsNullOrWhiteSpace(analysisEvent.TenantId)
+                    && Guid.TryParse(analysisEvent.TenantId, out var parsedTenant))
+                {
+                    tenantId = parsedTenant;
+                }
+
                 var domainEvent = new AlertTriggeredDomainEvent(
                     mostSevereAlert.Id,
                     mostSevereAlert.ProductId,
@@ -129,8 +136,10 @@ public sealed class EvaluateAlertHandler : IAlertService
                     mostSevereAlert.Message,
                     mostSevereAlert.CurrentPrice,
                     mostSevereAlert.AveragePrice,
-                    analysisEvent.AnalyzedAt,
-                    "AlertEvaluationService");
+                    analysisEvent.AnalysisDate,
+                    "AlertEvaluationService",
+                    analysisEvent.NotifyUserId,
+                    tenantId);
 
                 await _eventBus.PublishAsync(domainEvent, ct);
 
@@ -162,7 +171,7 @@ public sealed class EvaluateAlertHandler : IAlertService
 
     private async Task<Alert?> EvaluateRuleAsync(
         AlertRule rule,
-        PriceAnalysisCompletedEvent evt,
+        PriceAnalyzedEvent evt,
         CancellationToken ct)
     {
         try

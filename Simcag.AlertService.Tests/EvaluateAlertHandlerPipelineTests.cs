@@ -38,12 +38,12 @@ public sealed class EvaluateAlertHandlerPipelineTests
             NullLogger<EvaluateAlertHandler>.Instance,
             Array.Empty<IAlertEvaluationStrategy>());
 
-        var evt = new PriceAnalysisCompletedEvent
+        var evt = new PriceAnalyzedEvent
         {
             ProductId = "P1",
             ProductName = "N",
             Category = "C",
-            AnalyzedAt = DateTime.UtcNow
+            AnalysisDate = DateTime.UtcNow
         };
 
         var result = await handler.EvaluateAlertAsync(evt, default);

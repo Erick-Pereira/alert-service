@@ -2,11 +2,8 @@ using Simcag.AlertService.Application.Interfaces;
 using Simcag.AlertService.Domain.Events;
 using Simcag.Shared.Events;
 using Simcag.Shared.Messaging;
-using Simcag.Shared.Messaging.Abstractions;
+using Simcag.Shared.Messaging.Contracts;
 using Microsoft.Extensions.Logging;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Simcag.AlertService.Infrastructure.Messaging;
 
@@ -16,11 +13,11 @@ namespace Simcag.AlertService.Infrastructure.Messaging;
 /// </summary>
 public sealed class RabbitMqEventBus : IEventBus
 {
-    private readonly IPublisher _publisher;
+    private readonly Simcag.Shared.Messaging.Contracts.IEventPublisher<AlertTriggeredEvent> _publisher;
     private readonly ILogger<RabbitMqEventBus> _logger;
 
     public RabbitMqEventBus(
-        IPublisher publisher,
+        Simcag.Shared.Messaging.Contracts.IEventPublisher<AlertTriggeredEvent> publisher,
         ILogger<RabbitMqEventBus> logger)
     {
         _publisher = publisher;
@@ -46,15 +43,19 @@ public sealed class RabbitMqEventBus : IEventBus
             AveragePrice = domainEvent.AveragePrice,
             OccurredAt = domainEvent.OccurredAt,
             GeneratedAt = DateTime.UtcNow,
-            Source = domainEvent.Source ?? "RabbitMqEventBus"
+            Source = domainEvent.Source ?? "RabbitMqEventBus",
+            UserId = domainEvent.NotifyUserId,
+            TenantId = domainEvent.TenantId
         };
 
         try
         {
-            await _publisher.PublishAsync(sharedEvent, EventNames.AlertTriggered, ct);
+            // Exchange events + routing key AlertTriggeredEvent (see RabbitMqEventConsumer / RabbitMqQueueInitializer).
+            await _publisher.PublishAsync(sharedEvent, cancellationToken: ct);
             _logger.LogInformation(
-                "Published AlertTriggeredDomainEvent {AlertId} to RabbitMQ",
-                domainEvent.AlertId);
+                "Published AlertTriggeredEvent {AlertId} to RabbitMQ (exchange=events, routingKey={RoutingKey})",
+                domainEvent.AlertId,
+                nameof(AlertTriggeredEvent));
         }
         catch (Exception ex)
         {

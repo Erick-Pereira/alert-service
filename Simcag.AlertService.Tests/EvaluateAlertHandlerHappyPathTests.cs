@@ -21,12 +21,12 @@ public sealed class EvaluateAlertHandlerHappyPathTests
     {
         public AlertType SupportedType => AlertType.OverpriceMarket;
 
-        public Task<Alert?> EvaluateAsync(AlertRule rule, PriceAnalysisCompletedEvent evt, CancellationToken ct) =>
+        public Task<Alert?> EvaluateAsync(AlertRule rule, PriceAnalyzedEvent evt, CancellationToken ct) =>
             Task.FromResult<Alert?>(Alert.Create(
                 evt.ProductId, evt.ProductName, evt.Category,
                 "OverpriceMarket", "Superfaturamento",
                 AlertSeverity.High, 20m, "over threshold",
-                evt.LastPrice, evt.AveragePrice, evt.AnalyzedAt));
+                evt.LastPrice, evt.MarketAverage, evt.AnalysisDate));
     }
 
     [Fact]
@@ -60,15 +60,15 @@ public sealed class EvaluateAlertHandlerHappyPathTests
             NullLogger<EvaluateAlertHandler>.Instance,
             strategies);
 
-        var evt = new PriceAnalysisCompletedEvent
+        var evt = new PriceAnalyzedEvent
         {
             ProductId = "P1",
             ProductName = "Prod",
             Category = "C1",
             LastPrice = 120m,
-            MarketPrice = 100m,
-            AveragePrice = 100m,
-            AnalyzedAt = DateTime.UtcNow
+            MarketAverage = 100m,
+            HistoricalAverage = 100m,
+            AnalysisDate = DateTime.UtcNow
         };
 
         var result = await handler.EvaluateAlertAsync(evt, default);

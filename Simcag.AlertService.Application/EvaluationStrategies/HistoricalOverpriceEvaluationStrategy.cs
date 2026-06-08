@@ -23,12 +23,12 @@ public sealed class HistoricalOverpriceEvaluationStrategy : IAlertEvaluationStra
 
     public AlertType SupportedType => AlertType.OverpriceHistorical;
 
-    public async Task<Alert?> EvaluateAsync(AlertRule rule, PriceAnalysisCompletedEvent evt, CancellationToken ct)
+    public async Task<Alert?> EvaluateAsync(AlertRule rule, PriceAnalyzedEvent evt, CancellationToken ct)
     {
-        if (evt.AveragePrice <= 0)
+        if (evt.HistoricalAverage <= 0)
             return null;
 
-        var deviation = (evt.LastPrice - evt.AveragePrice) / evt.AveragePrice * 100m;
+        var deviation = (evt.LastPrice - evt.HistoricalAverage) / evt.HistoricalAverage * 100m;
 
         var classification = await _ruleService.ClassifyDeviationAsync(deviation, ct);
 
@@ -38,17 +38,16 @@ public sealed class HistoricalOverpriceEvaluationStrategy : IAlertEvaluationStra
         if (!DeviationPercentage.Create(deviation).IsAboveThreshold(rule.Threshold))
             return null;
 
-        // Validação de dispersão (outlier removal)
-        if (evt.StandardDeviation > evt.AveragePrice * 0.5m)
+        if (evt.StandardDeviation > evt.HistoricalAverage * 0.5m)
             return null;
 
         var message = $"Desvio histórico: R$ {evt.LastPrice:F2} vs " +
-            $"média R$ {evt.AveragePrice:F2} ({deviation:F1}%)";
+            $"média R$ {evt.HistoricalAverage:F2} ({deviation:F1}%)";
 
         return Alert.Create(
             evt.ProductId, evt.ProductName, evt.Category,
             "OverpriceHistorical", "Desvio Histórico",
             classification.Severity, deviation, message,
-            evt.LastPrice, evt.AveragePrice, evt.AnalyzedAt);
+            evt.LastPrice, evt.HistoricalAverage, evt.AnalysisDate);
     }
 }

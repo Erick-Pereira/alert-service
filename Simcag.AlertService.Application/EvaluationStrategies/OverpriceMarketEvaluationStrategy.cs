@@ -15,13 +15,13 @@ public sealed class OverpriceMarketEvaluationStrategy : IAlertEvaluationStrategy
 {
     public AlertType SupportedType => AlertType.OverpriceMarket;
 
-    public Alert? Evaluate(AlertRule rule, PriceAnalysisCompletedEvent evt)
+    public Alert? Evaluate(AlertRule rule, PriceAnalyzedEvent evt)
     {
-        if (evt.MarketPrice <= 0) return null;
+        if (evt.MarketAverage <= 0) return null;
 
-        var deviation = (evt.LastPrice - evt.MarketPrice) / evt.MarketPrice * 100m;
+        var deviation = (evt.LastPrice - evt.MarketAverage) / evt.MarketAverage * 100m;
 
-        if (!DeviationPercentage.Create(deviation).IsAboveThreshold(rule.Threshold)) 
+        if (!DeviationPercentage.Create(deviation).IsAboveThreshold(rule.Threshold))
             return null;
 
         var severity = deviation >= 25m ? AlertSeverity.Critical :
@@ -29,18 +29,15 @@ public sealed class OverpriceMarketEvaluationStrategy : IAlertEvaluationStrategy
                        AlertSeverity.Low;
 
         var message = $"Superfaturamento: NF R$ {evt.LastPrice:F2} vs " +
-            $"mercado R$ {evt.MarketPrice:F2} ({deviation:F1}%)";
+            $"mercado R$ {evt.MarketAverage:F2} ({deviation:F1}%)";
 
         return Alert.Create(
             evt.ProductId, evt.ProductName, evt.Category,
             "OverpriceMarket", "Superfaturamento",
             severity, deviation, message,
-            evt.LastPrice, evt.MarketPrice, evt.AnalyzedAt);
+            evt.LastPrice, evt.MarketAverage, evt.AnalysisDate);
     }
 
-    public Task<Alert?> EvaluateAsync(AlertRule rule, PriceAnalysisCompletedEvent evt, CancellationToken ct)
-    {
-        // Síncrono, mas interface requer Task
-        return Task.FromResult(Evaluate(rule, evt));
-    }
+    public Task<Alert?> EvaluateAsync(AlertRule rule, PriceAnalyzedEvent evt, CancellationToken ct) =>
+        Task.FromResult(Evaluate(rule, evt));
 }

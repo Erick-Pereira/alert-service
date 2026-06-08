@@ -17,7 +17,7 @@ public interface IAlertService
     /// <param name="ct">Token de cancelamento</param>
     /// <returns>O alerta gerado ou null se nenhuma regra foi disparada</returns>
     Task<Alert?> EvaluateAlertAsync(
-        PriceAnalysisCompletedEvent analysisEvent,
+        PriceAnalyzedEvent analysisEvent,
         CancellationToken ct);
 
     /// <summary>

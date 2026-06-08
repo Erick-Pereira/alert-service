@@ -14,7 +14,7 @@ public sealed class SupplierEscalationEvaluationStrategy : IAlertEvaluationStrat
 {
     public AlertType SupportedType => AlertType.SupplierEscalation;
 
-    public Task<Alert?> EvaluateAsync(AlertRule rule, PriceAnalysisCompletedEvent evt, CancellationToken ct)
+    public Task<Alert?> EvaluateAsync(AlertRule rule, PriceAnalyzedEvent evt, CancellationToken ct)
     {
         if (string.IsNullOrEmpty(evt.SupplierId) ||
             evt.PriceHistory == null || evt.PriceHistory.Count < 4)
@@ -22,7 +22,6 @@ public sealed class SupplierEscalationEvaluationStrategy : IAlertEvaluationStrat
             return Task.FromResult<Alert?>(null);
         }
 
-        // Pelo menos 3 aumentos consecutivos de preço (4+ pontos no histórico)
         var consecutive = 0;
         var maxConsecutive = 0;
         for (var i = 1; i < evt.PriceHistory.Count; i++)
@@ -39,14 +38,14 @@ public sealed class SupplierEscalationEvaluationStrategy : IAlertEvaluationStrat
             }
         }
 
-        if (maxConsecutive < 3) 
+        if (maxConsecutive < 3)
             return Task.FromResult<Alert?>(null);
 
         var first = evt.PriceHistory[0];
         var last = evt.PriceHistory[^1];
         var totalDev = (last - first) / first * 100m;
 
-        if (totalDev < rule.Threshold) 
+        if (totalDev < rule.Threshold)
             return Task.FromResult<Alert?>(null);
 
         var severity = totalDev >= 25m ? AlertSeverity.Critical :
@@ -60,7 +59,7 @@ public sealed class SupplierEscalationEvaluationStrategy : IAlertEvaluationStrat
             evt.ProductId, evt.ProductName, evt.Category,
             "SupplierEscalation", "Escalada de Fornecedor",
             severity, totalDev, message,
-            evt.LastPrice, evt.AveragePrice, evt.AnalyzedAt);
+            evt.LastPrice, evt.HistoricalAverage, evt.AnalysisDate);
 
         return Task.FromResult<Alert?>(alert);
     }

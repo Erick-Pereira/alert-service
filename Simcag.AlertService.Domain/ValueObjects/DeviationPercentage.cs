@@ -4,6 +4,9 @@ namespace Simcag.AlertService.Domain.ValueObjects;
 
 public class DeviationPercentage
 {
+    /// <summary>Alinhado com price-analysis <c>numeric(10,2)</c> e auditoria de superfaturamento extremo.</summary>
+    public const decimal MaxStoredPercent = 9999.99m;
+
     public decimal Value { get; }
 
     private DeviationPercentage(decimal value)
@@ -13,9 +16,12 @@ public class DeviationPercentage
 
     public static DeviationPercentage Create(decimal value)
     {
-        if (value < -100 || value > 100)
-            throw new ArgumentException("Deviação deve estar entre -100% e 100%", nameof(value));
-        return new DeviationPercentage(value);
+        var rounded = Math.Round(value, 2, MidpointRounding.AwayFromZero);
+        if (rounded > MaxStoredPercent)
+            rounded = MaxStoredPercent;
+        if (rounded < -MaxStoredPercent)
+            rounded = -MaxStoredPercent;
+        return new DeviationPercentage(rounded);
     }
 
     public bool IsAboveThreshold(decimal threshold) => Math.Abs(Value) > threshold;

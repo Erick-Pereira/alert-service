@@ -8,29 +8,12 @@ using System.Threading.Tasks;
 namespace Simcag.AlertService.Application.EvaluationStrategies;
 
 /// <summary>
-/// Estratégia para avaliação de concentração de fornecedor
+/// Estratégia para avaliação de concentração de fornecedor (requer métrica de share no evento — não preenchida no canónico v1).
 /// </summary>
 public sealed class SupplierConcentrationEvaluationStrategy : IAlertEvaluationStrategy
 {
     public AlertType SupportedType => AlertType.SupplierConcentration;
 
-    public Task<Alert?> EvaluateAsync(AlertRule rule, PriceAnalysisCompletedEvent evt, CancellationToken ct)
-    {
-        if (evt.SupplierCategoryShare < rule.Threshold) 
-            return Task.FromResult<Alert?>(null);
-
-        var severity = evt.SupplierCategoryShare >= 75m ? AlertSeverity.Critical :
-                       AlertSeverity.Medium;
-
-        var message = $"Concentração: {evt.SupplierId} detém " +
-            $"{evt.SupplierCategoryShare:F1}% da categoria";
-
-        var alert = Alert.Create(
-            evt.ProductId, evt.ProductName, evt.Category,
-            "SupplierConcentration", "Concentração de Fornecedor",
-            severity, evt.SupplierCategoryShare, message,
-            evt.LastPrice, evt.AveragePrice, evt.AnalyzedAt);
-
-        return Task.FromResult<Alert?>(alert);
-    }
+    public Task<Alert?> EvaluateAsync(AlertRule rule, PriceAnalyzedEvent evt, CancellationToken ct) =>
+        Task.FromResult<Alert?>(null);
 }

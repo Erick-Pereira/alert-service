@@ -15,20 +15,20 @@ public sealed class SupplierEscalationEvaluationStrategyTests
     private static readonly AlertRule Rule = AlertRule.Create(
         "Escalation", "d", "cat", null, AlertType.SupplierEscalation, 5m);
 
-    private static PriceAnalysisCompletedEvent CreateEvent(
+    private static PriceAnalyzedEvent CreateEvent(
         IReadOnlyList<decimal> history,
         string? supplierId = "sup-1")
     {
-        return new PriceAnalysisCompletedEvent
+        return new PriceAnalyzedEvent
         {
             ProductId = "P1",
             ProductName = "P",
             Category = "cat",
-            SupplierId = supplierId,
+            SupplierId = supplierId ?? string.Empty,
             LastPrice = history.Count > 0 ? history[^1] : 0m,
-            AveragePrice = 100m,
+            HistoricalAverage = 100m,
             PriceHistory = new List<decimal>(history),
-            AnalyzedAt = DateTime.UtcNow
+            AnalysisDate = DateTime.UtcNow
         };
     }
 

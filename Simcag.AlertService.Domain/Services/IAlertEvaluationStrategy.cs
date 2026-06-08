@@ -12,5 +12,5 @@ namespace Simcag.AlertService.Domain.Services;
 public interface IAlertEvaluationStrategy
 {
     AlertType SupportedType { get; }
-    Task<Alert?> EvaluateAsync(AlertRule rule, PriceAnalysisCompletedEvent evt, CancellationToken ct);
+    Task<Alert?> EvaluateAsync(AlertRule rule, PriceAnalyzedEvent evt, CancellationToken ct);
 }

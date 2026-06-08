@@ -7,6 +7,7 @@ using Simcag.AlertService.Application.Workers;
 using Simcag.AlertService.Domain.Services;
 using Simcag.AlertService.Infrastructure.Cache;
 using Simcag.AlertService.Infrastructure.Messaging;
+using Simcag.AlertService.Infrastructure.Persistence;
 using Simcag.AlertService.Infrastructure.Persistence.Repositories;
 using Simcag.AlertService.Infrastructure.Persistence.DbContext;
 using Simcag.Shared.Events;
@@ -93,9 +94,9 @@ if (!isTesting)
 
     builder.Services.AddSingleton(rabbitMqOptions);
     builder.Services.AddRabbitMqMessaging(rabbitMqOptions);
-    builder.Services.AddRabbitMqPublisher("alert-monitoring-exchange");
     var eventsExchange = EventBusConstants.GetEventsExchangeName();
-    builder.Services.AddRabbitMqEventConsumer<PriceAnalysisCompletedEvent>(EventNames.PriceAnalysisCompleted, eventsExchange);
+    builder.Services.AddRabbitMqEventPublisher<AlertTriggeredEvent>(eventsExchange);
+    builder.Services.AddRabbitMqEventConsumer<PriceAnalyzedEvent>(EventNames.AlertPriceAnalyzed, eventsExchange);
     builder.Services.AddHostedService<PriceAnalysisAlertWorker>();
     builder.Services.AddScoped<IEventBus, RabbitMqEventBus>();
 }
@@ -177,6 +178,8 @@ if (app.Environment.IsDevelopment() && !EfMigrationsOptOut())
         var db = scope.ServiceProvider.GetRequiredService<AlertDbContext>();
         await db.Database.MigrateAsync();
     }
+
+    await DefaultAlertRulesSeed.EnsureSeededAsync(app.Services);
 }
 
 if (app.Environment.IsDevelopment())
