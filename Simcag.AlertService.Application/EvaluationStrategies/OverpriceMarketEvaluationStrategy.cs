@@ -35,7 +35,7 @@ public sealed class OverpriceMarketEvaluationStrategy : IAlertEvaluationStrategy
             evt.ProductId, evt.ProductName, evt.Category,
             "OverpriceMarket", "Superfaturamento",
             severity, deviation, message,
-            evt.LastPrice, evt.MarketAverage, evt.AnalysisDate);
+            evt.LastPrice, evt.MarketAverage, evt.AnalysisDate, evt.ExpenseId);
     }
 
     public Task<Alert?> EvaluateAsync(AlertRule rule, PriceAnalyzedEvent evt, CancellationToken ct) =>

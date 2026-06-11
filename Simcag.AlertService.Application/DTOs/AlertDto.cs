@@ -8,6 +8,7 @@ namespace Simcag.AlertService.Application.DTOs;
 public class AlertDto
 {
     public Guid Id { get; set; }
+    public Guid? ExpenseId { get; set; }
     public string ProductId { get; set; } = string.Empty;
     public string ProductName { get; set; } = string.Empty;
     public string Category { get; set; } = string.Empty;

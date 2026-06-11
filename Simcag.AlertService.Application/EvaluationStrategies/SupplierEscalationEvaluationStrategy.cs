@@ -59,7 +59,7 @@ public sealed class SupplierEscalationEvaluationStrategy : IAlertEvaluationStrat
             evt.ProductId, evt.ProductName, evt.Category,
             "SupplierEscalation", "Escalada de Fornecedor",
             severity, totalDev, message,
-            evt.LastPrice, evt.HistoricalAverage, evt.AnalysisDate);
+            evt.LastPrice, evt.HistoricalAverage, evt.AnalysisDate, evt.ExpenseId);
 
         return Task.FromResult<Alert?>(alert);
     }

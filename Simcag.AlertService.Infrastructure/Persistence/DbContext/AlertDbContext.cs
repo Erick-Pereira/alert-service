@@ -20,6 +20,8 @@ public class AlertDbContext : Microsoft.EntityFrameworkCore.DbContext
         modelBuilder.Entity<Alert>(entity =>
         {
             entity.HasKey(a => a.Id);
+            entity.Property(a => a.ExpenseId);
+            entity.HasIndex(a => a.ExpenseId);
             entity.Property(a => a.ProductId).IsRequired().HasMaxLength(100);
             entity.Property(a => a.Type).IsRequired().HasMaxLength(20);
             entity.Property(a => a.Message).IsRequired().HasMaxLength(500);

@@ -23,7 +23,7 @@ public sealed class AlertRepositoryEfTests
         return (context, new AlertRepository(context));
     }
 
-    private static Alert Sample(string productId, string type) => Alert.Create(
+    private static Alert Sample(string productId, string type, Guid? expenseId = null) => Alert.Create(
         productId: productId,
         productName: "N",
         category: "C",
@@ -34,7 +34,8 @@ public sealed class AlertRepositoryEfTests
         message: "M",
         currentPrice: 10m,
         averagePrice: 8m,
-        analyzedAt: DateTime.UtcNow);
+        analyzedAt: DateTime.UtcNow,
+        expenseId: expenseId);
 
     [Fact]
     public async Task GetPageAsync_filters_type_case_insensitively()
@@ -92,6 +93,22 @@ public sealed class AlertRepositoryEfTests
             q.UnreadCount.Should().Be(2);
             q.ByType["X"].Should().Be(2);
             q.ByType["Y"].Should().Be(1);
+        }
+    }
+
+    [Fact]
+    public async Task AddAsync_persists_ExpenseId_when_provided()
+    {
+        var expenseId = Guid.NewGuid();
+        var (ctx, repo) = CreateSut();
+        await using (ctx)
+        {
+            var alert = Sample("p-exp", "OVERPRICE_MARKET", expenseId);
+            await repo.AddAsync(alert, default);
+
+            var loaded = await repo.GetByIdAsync(alert.Id, default);
+            loaded.Should().NotBeNull();
+            loaded!.ExpenseId.Should().Be(expenseId);
         }
     }
 }

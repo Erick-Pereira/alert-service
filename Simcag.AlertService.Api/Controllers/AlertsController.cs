@@ -92,6 +92,7 @@ public class AlertsController : ControllerBase
         new()
         {
             Id = alert.Id,
+            ExpenseId = alert.ExpenseId,
             ProductId = alert.ProductId,
             ProductName = alert.ProductName,
             Category = alert.Category,

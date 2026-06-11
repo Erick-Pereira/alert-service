@@ -139,7 +139,8 @@ public sealed class EvaluateAlertHandler : IAlertService
                     analysisEvent.AnalysisDate,
                     "AlertEvaluationService",
                     analysisEvent.NotifyUserId,
-                    tenantId);
+                    tenantId,
+                    mostSevereAlert.ExpenseId ?? analysisEvent.ExpenseId);
 
                 await _eventBus.PublishAsync(domainEvent, ct);
 

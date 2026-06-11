@@ -26,6 +26,7 @@ public sealed class AlertTriggeredDomainEvent : BaseEvent
     public string? Source { get; }
     public Guid? NotifyUserId { get; }
     public Guid? TenantId { get; }
+    public Guid? ExpenseId { get; }
 
     public AlertTriggeredDomainEvent(
         Guid alertId,
@@ -43,7 +44,8 @@ public sealed class AlertTriggeredDomainEvent : BaseEvent
         DateTime occurredAt,
         string? source = null,
         Guid? notifyUserId = null,
-        Guid? tenantId = null)
+        Guid? tenantId = null,
+        Guid? expenseId = null)
     {
         AlertId = alertId;
         ProductId = productId;
@@ -61,5 +63,6 @@ public sealed class AlertTriggeredDomainEvent : BaseEvent
         Source = source ?? "AlertEvaluationService";
         NotifyUserId = notifyUserId is { } u && u != Guid.Empty ? u : null;
         TenantId = tenantId is { } t && t != Guid.Empty ? t : null;
+        ExpenseId = expenseId is { } e && e != Guid.Empty ? e : null;
     }
 }

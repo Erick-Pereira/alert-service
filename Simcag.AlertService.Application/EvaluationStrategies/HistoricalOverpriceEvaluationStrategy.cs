@@ -48,6 +48,6 @@ public sealed class HistoricalOverpriceEvaluationStrategy : IAlertEvaluationStra
             evt.ProductId, evt.ProductName, evt.Category,
             "OverpriceHistorical", "Desvio Histórico",
             classification.Severity, deviation, message,
-            evt.LastPrice, evt.HistoricalAverage, evt.AnalysisDate);
+            evt.LastPrice, evt.HistoricalAverage, evt.AnalysisDate, evt.ExpenseId);
     }
 }

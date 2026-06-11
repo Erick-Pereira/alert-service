@@ -45,7 +45,8 @@ public sealed class RabbitMqEventBus : IEventBus
             GeneratedAt = DateTime.UtcNow,
             Source = domainEvent.Source ?? "RabbitMqEventBus",
             UserId = domainEvent.NotifyUserId,
-            TenantId = domainEvent.TenantId
+            TenantId = domainEvent.TenantId,
+            ExpenseId = domainEvent.ExpenseId
         };
 
         try

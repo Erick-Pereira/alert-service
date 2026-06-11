@@ -9,6 +9,11 @@ namespace Simcag.AlertService.Domain.Entities;
 public class Alert : BaseEntity
 {
     /// <summary>
+    /// Despesa/NF de origem quando o alerta veio de análise de preço.
+    /// </summary>
+    public Guid? ExpenseId { get; private set; }
+
+    /// <summary>
     /// Identificador único do produto associado ao alerta
     /// </summary>
     public string ProductId { get; private set; } = string.Empty;
@@ -91,9 +96,11 @@ public class Alert : BaseEntity
         string message,
         decimal currentPrice,
         decimal averagePrice,
-        DateTime analyzedAt)
+        DateTime analyzedAt,
+        Guid? expenseId)
     {
         Id = Guid.NewGuid();
+        ExpenseId = expenseId is { } e && e != Guid.Empty ? e : null;
         ProductId = productId;
         ProductName = productName;
         Category = category;
@@ -124,9 +131,10 @@ public class Alert : BaseEntity
         string message,
         decimal currentPrice,
         decimal averagePrice,
-        DateTime analyzedAt) =>
+        DateTime analyzedAt,
+        Guid? expenseId = null) =>
         new(productId, productName, category, type, alertCategory, severity,
-            deviationPercentage, message, currentPrice, averagePrice, analyzedAt);
+            deviationPercentage, message, currentPrice, averagePrice, analyzedAt, expenseId);
 
     /// <summary>
     /// Marca o alerta como resolvido
